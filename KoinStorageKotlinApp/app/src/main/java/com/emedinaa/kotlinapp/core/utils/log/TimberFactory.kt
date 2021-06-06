@@ -1,4 +1,4 @@
-package com.emedinaa.kotlinapp.utils.log
+package com.emedinaa.kotlinapp.core.utils
 
 import com.emedinaa.kotlinapp.BuildConfig.DEBUG
 import timber.log.Timber

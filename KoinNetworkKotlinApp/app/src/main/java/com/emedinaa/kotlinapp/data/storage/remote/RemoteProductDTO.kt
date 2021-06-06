@@ -4,14 +4,16 @@ import com.google.gson.annotations.SerializedName
 
 
 /**
- * @author Eduardo Medina
+ *
  */
 
 //User
 data class UserDTO(
     @SerializedName("user-token") val token:String?,
     val email:String?,
-    val objectId:String?
+    val objectId:String?,
+    val code: Int? = 0,
+    val message: String? = ""
 )
 
 
@@ -21,7 +23,9 @@ data class LogInRaw(val login:String?,
 
 data class LogInResponse(@SerializedName("user-token") val token:String?,
                          val email:String?,
-                         val objectId:String?
+                         val objectId:String?,
+                         val code: Int? = 0,
+                         val message: String? = ""
 )
 
 //Product

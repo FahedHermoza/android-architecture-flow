@@ -26,5 +26,24 @@
         android:id="@+id/editFragment"
         android:name="com.emedinaa.kotlinapp.presentation.ui.EditFragment"
         android:label="fragment_edit"
-        tools:layout="@layout/fragment_edit" />
+        tools:layout="@layout/fragment_edit" >
+        <argument
+            android:name="id"
+            app:argType="integer"/>
+        <argument
+            android:name="name"
+            app:argType="string"/>
+        <argument
+            android:name="cost" />
+        <argument
+            android:name="description"
+            app:argType="string"/>
+        <argument
+            android:name="logo"
+            app:argType="integer" />
+        <argument
+            android:name="product"
+            app:argType="com.emedinaa.kotlinapp.domain.model.Product" />
+    </fragment>
+
 </navigation>

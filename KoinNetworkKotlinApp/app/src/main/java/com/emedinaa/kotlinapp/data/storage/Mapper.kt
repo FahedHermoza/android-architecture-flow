@@ -6,7 +6,6 @@ import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.domain.model.User
 
 /**
- * @author Eduardo Medina
  * https://kotlinlang.org/docs/reference/collection-transformations.html
  * http://modelmapper.org/
  */
@@ -14,7 +13,8 @@ object Mapper {
 
     //TODO convertir entidad a DTO y DTO a entidad
     fun userDTOToUser(userDTO: UserDTO): User =
-        User(userDTO.token ?: "", userDTO.email ?: "", userDTO.objectId ?: "")
+        User(userDTO.token ?: "", userDTO.email ?: "", userDTO.objectId ?: "",
+        userDTO.code, userDTO.message)
 
     fun productDTOToProduct(productDTO: ProductDTO): Product = Product(
         productDTO.objectId?:"", productDTO.name?:"", productDTO.description?:"",

@@ -7,38 +7,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.emedinaa.kotlinapp.R
+import com.emedinaa.kotlinapp.core.base.BaseBindingFragment
 import com.emedinaa.kotlinapp.databinding.FragmentEditBinding
+import com.emedinaa.kotlinapp.databinding.FragmentProductBinding
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class EditFragment : Fragment() {
+class EditFragment : BaseBindingFragment<FragmentEditBinding>(R.layout.fragment_edit) {
 
+    private  val args: EditFragmentArgs by navArgs()
     private val viewModel: ProductViewModel by viewModel()
-
-    private lateinit var binding: FragmentEditBinding
 
     private var product: Product? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        product = arguments?.getSerializable("PRODUCT") as? Product
+        //product = arguments?.getSerializable("PRODUCT") as? Product
+        //product = Product(args.id, args.name, args.cost.toDouble(), args.description, args.logo)
+        product = args.product
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
-        binding.lifecycleOwner = this
-        binding.viewmodel = viewModel
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun init() {
+        product = args.product
         render()
 
         binding.btnEditProduct.setOnClickListener {
@@ -54,11 +47,13 @@ class EditFragment : Fragment() {
         }
     }
 
+    override fun initViewModel() {}
+
     private fun isValidate(title: String, cost: Double): Boolean {
-        if(title.isNullOrEmpty())
+        if (title.isNullOrEmpty())
             return false
 
-        if(cost<0.0)
+        if (cost < 0.0)
             return false
 
         return true

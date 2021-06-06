@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 /**
- * @author Eduardo Medina
+ *
  */
 class PreferencesHelper(private val context: Context) {
 

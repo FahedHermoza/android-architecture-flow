@@ -17,6 +17,7 @@ plugins {
     id 'kotlin-android'
     //TODO room
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -106,4 +107,11 @@ dependencies {
 
     //TODO Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
+
+    //TODO retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2"
+    implementation "com.squareup.retrofit2:converter-gson:$gson"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    //INTERCEPTOR
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3"
 }

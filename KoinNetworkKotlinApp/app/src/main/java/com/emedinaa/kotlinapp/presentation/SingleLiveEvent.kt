@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * @author Eduardo Medina
  * https://github.com/android/architecture-samples/blob/dev-todo-mvvm-live/todoapp/app/src/main/java/com/example/android/architecture/blueprints/todoapp/SingleLiveEvent.java
  */
 class SingleLiveEvent<T> : MutableLiveData<T?>() {

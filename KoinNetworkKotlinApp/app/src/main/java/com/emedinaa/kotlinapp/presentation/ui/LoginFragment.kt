@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.emedinaa.kotlinapp.R
+import com.emedinaa.kotlinapp.core.base.BaseBindingFragment
 import com.emedinaa.kotlinapp.databinding.FragmentLoginBinding
 import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.presentation.UtilsAlertDialog
@@ -16,46 +17,48 @@ import com.emedinaa.kotlinapp.presentation.viewmodel.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseBindingFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
     private val viewModel: LoginViewModel by viewModel()
-
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
 
     private val dialog: AlertDialog by lazy {
         UtilsAlertDialog.setProgressDialog(requireContext(), "Loading..")
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setObservers()
-
+    override fun init() {
         binding.textInputLayoutUser.editText?.setText("admin@admin.com")
         binding.buttonLogin.setOnClickListener {
             if(validateForm()){
                 showAlertProgress()
                 viewModel.login(
-                    binding.textInputLayoutUser.editText?.text.toString(),
-                    binding.textInputLayoutPassword.editText?.text.toString()
+                        binding.textInputLayoutUser.editText?.text.toString(),
+                        binding.textInputLayoutPassword.editText?.text.toString()
                 )
             }
         }
+    }
+
+    override fun initViewModel() {
+        viewModel.onError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                showMessage(it)
+            }
+
+        })
+
+        viewModel.onSuccess.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                gotoProduct(it)
+            }
+        })
+
+        viewModel.loadingLiveData.observe(viewLifecycleOwner,{
+            if(it == true){
+                showAlertProgress()
+            }else{
+                hideAlertProgress()
+            }
+        })
     }
 
     private fun validateForm(): Boolean {
@@ -72,46 +75,22 @@ class LoginFragment : Fragment() {
         return true
     }
 
-    private fun setObservers() {
-        viewModel.onError.observe(viewLifecycleOwner, Observer {
-            hideAlertProgress()
-            it?.let {
-                showMessage(it)
-            }
-
-        })
-
-        viewModel.onSuccess.observe(viewLifecycleOwner, Observer {
-            hideAlertProgress()
-            it?.let {
-                gotoProduct(it)
-            }
-        })
-    }
-
     private fun showMessage(message: String) {
         view?.let {
             Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .show()
+                    .show()
         }
     }
 
     private fun gotoProduct(user: User) {
-        findNavController().navigate(R.id.action_loginFragment_to_productFragment,Bundle().apply {
-            putSerializable("USER",user)
-        })
+        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToProductFragment(USER = user))
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun showAlertProgress(){
+    private fun showAlertProgress() {
         dialog.show()
     }
 
-    private fun hideAlertProgress(){
+    private fun hideAlertProgress() {
         dialog.hide()
     }
 }

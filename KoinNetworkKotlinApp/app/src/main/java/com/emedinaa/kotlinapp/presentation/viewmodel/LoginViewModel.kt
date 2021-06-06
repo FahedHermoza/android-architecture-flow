@@ -2,36 +2,50 @@ package com.emedinaa.kotlinapp.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.emedinaa.kotlinapp.data.StorageResult
+import com.emedinaa.kotlinapp.core.base.BaseViewModel
+import com.emedinaa.kotlinapp.core.data.DataType
 import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.domain.usecase.user.AuthenticateUserUseCase
 import com.emedinaa.kotlinapp.domain.usecase.user.SaveSessionUseCase
 import com.emedinaa.kotlinapp.presentation.SingleLiveEvent
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseCase,
-                    private val saveSessionUseCase: SaveSessionUseCase): ViewModel() {
+                    private val saveSessionUseCase: SaveSessionUseCase): BaseViewModel() {
     val _onError = MutableLiveData<String>()
     val onError: LiveData<String> = _onError
 
-    val onSuccess = SingleLiveEvent<User>()
+    private val _loadingLiveData = MutableLiveData<Boolean>()
+    val loadingLiveData: LiveData<Boolean?> get() = _loadingLiveData
 
-    fun login(username: String?, password: String?) = viewModelScope.launch {
-        when(val result =authenticationUserUseCase.invoke(username,password)){
-            is StorageResult.Complete -> {
-                result.data?.let { itUser->
-                    saveSessionUseCase.invoke(itUser.email,itUser.token, itUser.objectId)
-                    onSuccess.value = itUser
+    val onSuccess = SingleLiveEvent<User?>()
+
+    fun login(username: String?, password: String?) = launch {
+        val params = AuthenticateUserUseCase.AuthenticateUserUseCaseParams(username, password)
+        authenticationUserUseCase.invoke(params).collect{ dataState ->
+            _loadingLiveData.postValue(dataState.loading)
+            when(dataState.type){
+                DataType.Success -> {
+                    val data = dataState.data
+                    val email = data?.email ?: ""
+                    val token = data?.token ?:  ""
+                    val objectId = data?.objectId ?:""
+                    val params = SaveSessionUseCase.SaveSessionUseCaseParams(email, token, objectId)
+                    saveSessionUseCase.invoke(params)
+                    onSuccess.postValue(data!!)  //Resivar
+                }
+
+                DataType.Error -> {
+                    //Resivar cuando se obtiene:
+                    // 401 Unauthorized
+                    // {"code":3003,"message":"Invalid login or password","errorData":{}}
+                    _onError.postValue( dataState.message.toString())
+                    Timber.e("Error logueo: ${dataState.message}")
                 }
             }
-            is StorageResult.Failure -> {
-                _onError.value = result.exception?.message?:"Ocurrió un error"
-            }
-            else -> {
-                _onError.value = "Error 401...unauthorized"
-            }
         }
+
     }
 }

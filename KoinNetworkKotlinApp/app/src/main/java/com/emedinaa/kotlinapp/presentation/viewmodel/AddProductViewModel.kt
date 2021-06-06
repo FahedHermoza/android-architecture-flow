@@ -4,19 +4,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.emedinaa.kotlinapp.core.base.BaseViewModel
+import com.emedinaa.kotlinapp.core.data.DataType
 import com.emedinaa.kotlinapp.data.StorageResult
+import com.emedinaa.kotlinapp.domain.model.MultipleDelete
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.domain.usecase.product.AddProductUseCase
+import com.emedinaa.kotlinapp.domain.usecase.product.ClearProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.user.GetObjectIdUseCase
 import com.emedinaa.kotlinapp.domain.usecase.user.GetSessionUseCase
 import com.emedinaa.kotlinapp.presentation.SingleLiveEvent
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class AddProductViewModel(private val addProductUseCase: AddProductUseCase,
                             private val getSessionUseCase: GetSessionUseCase,
-                            private val getObjectIdUseCase: GetObjectIdUseCase): ViewModel() {
+                            private val getObjectIdUseCase: GetObjectIdUseCase): BaseViewModel() {
     val _onError = MutableLiveData<String>()
     val onError: LiveData<String> = _onError
+
+    private val _loadingLiveData = MutableLiveData<Boolean>()
+    val loadingLiveData: LiveData<Boolean?> get() = _loadingLiveData
 
     val onSuccess = SingleLiveEvent<Product>()
 
@@ -28,17 +37,22 @@ class AddProductViewModel(private val addProductUseCase: AddProductUseCase,
         getObjectIdUseCase.invoke()?:""
     }
 
-    fun addProduct(title:String, cost:Double) = viewModelScope.launch {
+    fun addProduct(title:String, cost:Double) = launch {
         val product = Product("", title, "", cost, "",objectId)
+        val params = AddProductUseCase.AddProductUseCaseParams(token, product)
+        addProductUseCase.invoke(params).collect{ dataState ->
+            _loadingLiveData.postValue(dataState.loading)
+            when(dataState.type){
+                DataType.Success -> {
+                    val data = dataState.data
+                    onSuccess.postValue(data!!)
+                }
 
-        when(val result = addProductUseCase.invoke(token, product)){
-            is StorageResult.Complete -> {
-                result.data?.let {
-                    onSuccess.value = it
+                DataType.Error -> {
+                    _onError.postValue( "Ocurrió un error ${dataState.code }")
+                    Timber.i("Error logueo: ${dataState.message}")
                 }
             }
-            is StorageResult.Failure -> { _onError.value = result.exception?.message?:"Ocurrió un error" }
-            else -> { _onError.value = "Error 401...unauthorized" }
         }
     }
 }

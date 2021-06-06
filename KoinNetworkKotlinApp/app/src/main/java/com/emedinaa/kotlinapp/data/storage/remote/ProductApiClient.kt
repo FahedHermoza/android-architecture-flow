@@ -93,13 +93,13 @@ interface ProductApiClient {
     suspend fun logInBL(@Path("applicationid") appID:String,
                         @Path("restapikey") restApiKey:String,
                         @Body raw: LogInRaw
-    ): Response<LogInResponse>
+    ): LogInResponse
 
     //https://api.backendless.com/10D59C7B-6F06-9680-FF6F-D14965C63800/033EA8E0-7219-480B-B934-3F176D26DA7F/data/Product
     @GET("/{applicationid}/{restapikey}/data/Product")
     suspend fun products(@Path("applicationid") appID:String,
                          @Path("restapikey") restApiKEY:String,
-                         @HeaderMap headers:Map<String,String>?): Response<List<ProductDTO>>
+                         @HeaderMap headers:Map<String,String>?): List<ProductDTO>
 
     //Create Note
     //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>
@@ -107,7 +107,7 @@ interface ProductApiClient {
     suspend fun addProduct(@Path("applicationid") appID:String,
                            @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
                            @Body raw: ProductRaw
-    ): Response<ProductResponse>
+    ): ProductResponse
 
     //Delete Note
     //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>/<object-id>
@@ -121,13 +121,13 @@ interface ProductApiClient {
     @DELETE("/{applicationid}/{restapikey}/data/bulk/Product")
     suspend fun deleteProducts(@Path("applicationid") appID: String,
                                @Path("restapikey") restApiKEY: String, @HeaderMap headers: Map<String, String>?,
-                               @Query("where") where: String?): Response<Int>
+                               @Query("where") where: String?): Int
 
     //Update Note
     //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>/<object-id>
     @PUT("/{applicationid}/{restapikey}/data/Product/{objectId}")
     suspend fun updateProduct(@Path("applicationid") appID:String,
                               @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
-                              @Path("objectId")objectId:String?,@Body raw: ProductRaw?): Response<ProductResponse>
+                              @Path("objectId")objectId:String?,@Body raw: ProductRaw?): ProductResponse
 
 }

@@ -9,7 +9,7 @@ abstract class DataResponseHandler<ViewState, Data>(private val response: DataRe
                 else handleSuccess(resultObj = response.data)
             }
 
-            is DataResult.Error -> DataState.error(code = response.code, message = "")
+            is DataResult.Error -> DataState.error(code = response.code, message = response.message ?:"")
 
             is DataResult.NetworkError -> DataState.error(message = "General network error")
         }

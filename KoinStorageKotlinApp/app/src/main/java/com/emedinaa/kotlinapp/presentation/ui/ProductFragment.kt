@@ -7,50 +7,43 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import com.emedinaa.kotlinapp.R
+import com.emedinaa.kotlinapp.core.base.BaseBindingFragment
+import com.emedinaa.kotlinapp.databinding.FragmentAddProductBinding
 import com.emedinaa.kotlinapp.databinding.FragmentProductBinding
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-
-class ProductFragment : Fragment() {
+/***
+ * https://developer.android.com/guide/navigation/navigation-pass-data
+ */
+class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fragment_product) {
 
     private val viewModel: ProductViewModel by viewModel()
 
-    private lateinit var binding: FragmentProductBinding
-
     private lateinit var adapter: ProductsAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
-        binding.lifecycleOwner = this
-        binding.viewmodel = viewModel
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun init() {
         binding.fabProduct.setOnClickListener {
             goToAddProduct()
         }
-
         setupView()
-        setObservers()
     }
 
-    private fun setObservers() {
+    override fun initViewModel() {
         viewModel.loadProducts().observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.update(it)
@@ -74,9 +67,24 @@ class ProductFragment : Fragment() {
     }
 
     private fun goToEditProduct(product: Product) {
+
+        /*
+        //Navigate with actions
         findNavController().navigate(R.id.action_productFragment_to_editFragment, Bundle().apply {
             putSerializable("PRODUCT", product)
-        })
+        })*/
+
+        //Navigation safe args
+        findNavController().navigate(
+            ProductFragmentDirections.actionProductFragmentToEditFragment(
+                id = product.id,
+                name = product.name,
+                cost = product.cost.toString(),
+                description = product.description,
+                logo = product.logo,
+                product = product
+            )
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -84,7 +92,7 @@ class ProductFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.action_all_delete){
+        if (item.itemId == R.id.action_all_delete) {
             viewModel.deleteAllProducts()
             showToast("Productos eliminados")
         }

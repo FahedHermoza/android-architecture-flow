@@ -1,5 +1,7 @@
 package com.emedinaa.kotlinapp.core.data
 
+import timber.log.Timber
+
 abstract class DataResponseHandler<ViewState, Data>(private val response: DataResult<Data?>) {
 
     suspend fun getResult(): DataState<ViewState> {
@@ -9,7 +11,7 @@ abstract class DataResponseHandler<ViewState, Data>(private val response: DataRe
                 else handleSuccess(resultObj = response.data)
             }
 
-            is DataResult.Error -> DataState.error(code = response.code, message = response.message ?:"")
+            is DataResult.Error -> DataState.error(code = response.code, errorBody = response.message)
 
             is DataResult.NetworkError -> DataState.error(message = "General network error")
         }

@@ -39,13 +39,8 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
     }
 
     override fun initViewModel() {
-        viewModel.onError.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                showMessage(it)
-            }
-        })
-
-        viewModel.onProducts.observe(viewLifecycleOwner, Observer {
+        viewModel.onError.observeNotNull { showMessage(it) }
+        viewModel.onProducts.observe {
             it?.let {
                 if (it.isEmpty()) {
                     binding.imageViewEmpty.visibility = View.VISIBLE
@@ -54,30 +49,17 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
                     adapter.update(it)
                 }
             }
-        })
-
-        viewModel.onProductEmpty.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if (it) {
-                    adapter.clear()
-                    viewModel.loadProducts()
-                }
+        }
+        viewModel.onProductEmpty.observeNotNull {
+            if (it) {
+                adapter.clear()
+                viewModel.loadProducts()
             }
-        })
-
-        viewModel.onSuccessDeleteAll.observe(viewLifecycleOwner, Observer {
-            it?.let {
+        }
+        viewModel.onSuccessDeleteAll.observeNotNull {
                 showMessage(it)
-            }
-        })
-
-        viewModel.loadingLiveData.observe(viewLifecycleOwner,{
-            if(it == true){
-                showProgressBar()
-            }else{
-                hideProgressBar()
-            }
-        })
+        }
+        viewModel.loadingLiveData.observeNotNull { showProgressBarLoading(it, binding.pbProducts) }
     }
 
     private fun goToAddProduct() {
@@ -117,17 +99,5 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
             viewModel.deleteAllProducts()
         }
         return false
-    }
-
-    private fun showToast(string: String) {
-        Toast.makeText(context, string, Toast.LENGTH_LONG).show()
-    }
-
-    private fun showProgressBar(){
-        binding.pbProducts.visibility = View.VISIBLE
-    }
-
-    private fun hideProgressBar(){
-        binding.pbProducts.visibility = View.GONE
     }
 }

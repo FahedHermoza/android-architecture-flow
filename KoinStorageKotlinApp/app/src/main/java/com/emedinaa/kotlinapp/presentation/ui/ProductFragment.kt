@@ -44,7 +44,7 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
     }
 
     override fun initViewModel() {
-        viewModel.loadProducts().observe(viewLifecycleOwner, Observer {
+        viewModel.onProducts.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.update(it)
             }

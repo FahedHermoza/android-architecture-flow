@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.emedinaa.kotlinapp.core.base.BaseViewModel
 import com.emedinaa.kotlinapp.core.data.DataType
+import com.emedinaa.kotlinapp.domain.model.ErrorBody
 import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.domain.usecase.user.AuthenticateUserUseCase
 import com.emedinaa.kotlinapp.domain.usecase.user.SaveSessionUseCase
@@ -15,7 +16,7 @@ import timber.log.Timber
 class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseCase,
                     private val saveSessionUseCase: SaveSessionUseCase): BaseViewModel() {
     val _onError = MutableLiveData<String>()
-    val onError: LiveData<String> = _onError
+    val onError: LiveData<String?> = _onError
 
     private val _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean?> get() = _loadingLiveData
@@ -41,8 +42,9 @@ class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseC
                     //Resivar cuando se obtiene:
                     // 401 Unauthorized
                     // {"code":3003,"message":"Invalid login or password","errorData":{}}
-                    _onError.postValue( dataState.message.toString())
-                    Timber.e("Error logueo: ${dataState.message}")
+                    var errorResponse  = ErrorBody.fromJsonString(dataState.errorBody.toString())
+                    _onError.postValue( errorResponse.message )
+                    Timber.e("Error logueo: ${dataState.message.toString()}")
                 }
             }
         }

@@ -2,7 +2,6 @@ package com.emedinaa.kotlinapp.core.data
 
 import kotlinx.coroutines.*
 import retrofit2.HttpException
-import timber.log.Timber
 import java.io.IOException
 
 private const val NETWORK_TIMEOUT = 60
@@ -10,7 +9,7 @@ private const val CACHE_TIMEOUT = 5
 
 sealed class DataResult<out T> {
     data class Success<out T>(val data: T) : DataResult<T>()
-    data class Error(val code: Int? = null, val message: String? = null) : DataResult<Nothing>()
+    data class Error(val code: Int? = null, val message: String? = null, val body: String? = null) : DataResult<Nothing>()
     object NetworkError : DataResult<Nothing>()
 }
 
@@ -24,11 +23,10 @@ suspend fun <T : Any> safeApiCall(
                 DataResult.Success(apiCall.invoke())
             }
         } catch (ex: Exception) {
-            Timber.e("Error: $ex")
             when (ex) {
                 is TimeoutCancellationException -> DataResult.Error(408)
                 is IOException -> DataResult.NetworkError
-                is HttpException -> DataResult.Error(ex.code())
+                is HttpException -> DataResult.Error(ex.code(), ex.response()?.errorBody()?.string())
                 else -> DataResult.Error(null, "Unknown error")
             }
         }

@@ -19,12 +19,12 @@ import timber.log.Timber
 class EditProductViewModel(private val updateProductUseCase: UpdateProductUseCase,
                            private val getSessionUseCase: GetSessionUseCase): BaseViewModel() {
     val _onError = MutableLiveData<String>()
-    val onError: LiveData<String> = _onError
+    val onError: LiveData<String?> = _onError
 
     private val _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean?> get() = _loadingLiveData
 
-    val onSuccess = SingleLiveEvent<Product>()
+    val onSuccess = SingleLiveEvent<Product?>()
 
     private val token by lazy {
         getSessionUseCase()?:""

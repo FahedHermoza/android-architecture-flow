@@ -19,20 +19,18 @@ class ProductViewModel(
     private val updateProductUseCase: UpdateProductUseCase
 ) : BaseViewModel() {
 
-    private val _products = MutableLiveData<LiveData<List<Product>>>()
-    val onProducts = _products
+    private val _products = MutableLiveData<List<Product>>()
+    val onProducts: LiveData<List<Product>> = _products
 
     init {
         loadProducts()
     }
 
-    fun loadProducts(): LiveData<List<Product>> = fetchProductUseCase.invoke().asLiveData()
-/*
-    fun loadProducts(): LiveData<List<Product>> = launch {
+    fun loadProducts() = launch {
         fetchProductUseCase.invoke().collect {
-           //Convert List<Product> to LiveData<List<Product>>
+            _products.postValue(it)
         }
-    }*/
+    }
 
     fun addNewProduct(title: String, cost: Double, description: String) = launch {
         var product = Product(0, title, cost, description, R.mipmap.ic_funko)

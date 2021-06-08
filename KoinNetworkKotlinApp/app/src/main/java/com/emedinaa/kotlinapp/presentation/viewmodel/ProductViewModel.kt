@@ -23,18 +23,18 @@ class ProductViewModel(private val fetchProductUseCase: FetchProductUseCase,
                        private val clearProductUseCase: ClearProductUseCase,
                        private val getSessionUseCase: GetSessionUseCase): BaseViewModel() {
     val _onError = MutableLiveData<String>()
-    val onError: LiveData<String> = _onError
+    val onError: LiveData<String?> = _onError
 
     private val _products = MutableLiveData <List<Product>>()
     val onProducts: LiveData<List<Product>> = _products
 
     private val _productEmpty = MutableLiveData <Boolean>()
-    val onProductEmpty: LiveData<Boolean> = _productEmpty
+    val onProductEmpty: LiveData<Boolean?> = _productEmpty
 
     private val _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean?> get() = _loadingLiveData
 
-    val onSuccessDeleteAll = SingleLiveEvent<String>()
+    val onSuccessDeleteAll = SingleLiveEvent<String?>()
 
     private val token by lazy {
         getSessionUseCase()?:""

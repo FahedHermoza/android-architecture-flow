@@ -5,7 +5,8 @@ data class DataState<T>(
     val loading: Boolean = false,
     val message: String? = null,
     val code: Int? = null,
-    val type: DataType = DataType.None
+    val type: DataType = DataType.None,
+    val errorBody: String? = null
 ) {
     companion object {
         fun <T> loading(isLoading: Boolean): DataState<T> =
@@ -14,8 +15,8 @@ data class DataState<T>(
         fun <T> data(message: String? = null, data: T? = null): DataState<T> =
             DataState(message = message, data = data, type = DataType.Success)
 
-        fun <T> error(code: Int? = null, message: String? = null): DataState<T> =
-            DataState(code = code, message = message, type = DataType.Error)
+        fun <T> error(code: Int? = null, message: String? = null, errorBody: String? = null): DataState<T> =
+            DataState(code = code, message = message, type = DataType.Error, errorBody = errorBody)
     }
 }
 

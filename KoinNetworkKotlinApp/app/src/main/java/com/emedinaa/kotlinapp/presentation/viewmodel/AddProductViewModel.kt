@@ -22,12 +22,12 @@ class AddProductViewModel(private val addProductUseCase: AddProductUseCase,
                             private val getSessionUseCase: GetSessionUseCase,
                             private val getObjectIdUseCase: GetObjectIdUseCase): BaseViewModel() {
     val _onError = MutableLiveData<String>()
-    val onError: LiveData<String> = _onError
+    val onError: LiveData<String?> = _onError
 
     private val _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean?> get() = _loadingLiveData
 
-    val onSuccess = SingleLiveEvent<Product>()
+    val onSuccess = SingleLiveEvent<Product?>()
 
     private val token by lazy {
         getSessionUseCase()?:""

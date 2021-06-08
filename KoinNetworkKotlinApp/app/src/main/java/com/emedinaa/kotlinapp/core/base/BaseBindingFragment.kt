@@ -3,21 +3,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.emedinaa.kotlinapp.presentation.UtilsAlertDialog
 
-abstract class BaseBindingFragment<VB : ViewDataBinding>(@LayoutRes protected val layoutRes: Int) : Fragment() {
+abstract class BaseBindingFragment<VB : ViewDataBinding>(@LayoutRes protected val layoutRes: Int) :
+    Fragment() {
 
     protected lateinit var binding: VB
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private val dialog: AlertDialog by lazy {
+        UtilsAlertDialog.setProgressDialog(requireContext(), "Loading..")
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        //
         return binding.root
     }
 
@@ -31,9 +43,31 @@ abstract class BaseBindingFragment<VB : ViewDataBinding>(@LayoutRes protected va
 
     abstract fun initViewModel()
 
-    fun showLoading(show: Boolean) {
+    fun showLoading(show: Boolean) {}
 
+    // Optional
+    fun showAlertProgressLoading(show: Boolean) {
+        if(show)
+            showAlertProgress()
+        else
+            hideAlertProgress()
     }
+
+    private fun showAlertProgress() { dialog.show() }
+
+    private fun hideAlertProgress() { dialog.hide() }
+
+    fun showProgressBarLoading(show: Boolean, view: ProgressBar) {
+        if(show)
+            showProgressBar(view)
+        else
+            hideProgressBar(view)
+    }
+
+    private fun showProgressBar(view: ProgressBar) { view.visibility = View.VISIBLE }
+
+    private fun hideProgressBar(view: ProgressBar) { view.visibility = View.GONE }
+    // Optional
 
     @MainThread
     protected inline fun <T> LiveData<T>.observe(crossinline onChanged: (T?) -> Unit): Observer<T> {

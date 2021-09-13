@@ -21,6 +21,6 @@ package com.emedinaa.kotlinapp.data.remote
  */
 object ProductConstant {
 
-    const val APPLICATION_ID: String = "538B0AAE-3CEF-4786-FF6D-D9A971653500"
-    const val REST_API_KEY: String = "9DFF3053-5796-4E74-B8EB-C7EF67E9B985"
+    const val APPLICATION_ID: String = "8C354A9D-D6EF-3207-FF0D-9967BD9B2E00"
+    const val REST_API_KEY: String = "F6A49E30-8264-4643-96E0-7B1DA05CF5FA"
 }

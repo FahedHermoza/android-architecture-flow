@@ -17,8 +17,9 @@ data class UserDTO(
 )
 
 
-data class LogInRaw(val login:String?,
-                    val password:String?
+data class LogInRequest(
+    val login: String?,
+    val password: String?
 )
 
 data class LogInResponse(@SerializedName("user-token") val token:String?,

@@ -16,9 +16,10 @@ interface ProductApiClient {
     //Backendless
     //7FBB8DC0-4C21-0178-FF76-367F7D30DC00/E5214A86-653A-529C-FF73-95B4DD4F8C00/users/login
     @POST("/{applicationid}/{restapikey}/users/login")
-    suspend fun logInBL(@Path("applicationid") appID:String,
-                        @Path("restapikey") restApiKey:String,
-                        @Body raw: LogInRaw
+    suspend fun login(
+        @Path("applicationid") appID: String,
+        @Path("restapikey") restApiKey: String,
+        @Body request: LogInRequest
     ): LogInResponse
 
     //https://api.backendless.com/10D59C7B-6F06-9680-FF6F-D14965C63800/033EA8E0-7219-480B-B934-3F176D26DA7F/data/Product

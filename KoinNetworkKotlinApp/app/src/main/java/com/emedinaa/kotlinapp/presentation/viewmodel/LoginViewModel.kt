@@ -3,9 +3,9 @@ package com.emedinaa.kotlinapp.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.emedinaa.kotlinapp.core.base.BaseViewModel
+import com.emedinaa.kotlinapp.core.base.ErrorHttpException
 import com.emedinaa.kotlinapp.core.data.DataType
 import com.emedinaa.kotlinapp.core.utils.livedata.SingleLiveEvent
-import com.emedinaa.kotlinapp.domain.model.ErrorBody
 import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.domain.usecase.user.AuthenticateUserUseCase
 import com.emedinaa.kotlinapp.domain.usecase.user.SaveSessionUseCase
@@ -47,7 +47,8 @@ class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseC
                 DataType.Error -> {
                     // 401 Unauthorized
                     // {"code":3003,"message":"Invalid login or password","errorData":{}}
-                    var errorResponse = ErrorBody.fromJsonString(dataState.errorBody.toString())
+                    var errorResponse =
+                        ErrorHttpException.fromJsonString(dataState.errorBody.toString())
                     _onError.postValue(errorResponse.message)
                     Timber.e("Error logueo: ${dataState.message.toString()}")
                 }

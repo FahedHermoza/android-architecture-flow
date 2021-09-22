@@ -1,24 +1,22 @@
 package com.emedinaa.kotlinapp.presentation.ui
 
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.emedinaa.kotlinapp.R
 import com.emedinaa.kotlinapp.core.base.BaseBindingFragment
-import com.emedinaa.kotlinapp.databinding.FragmentLoginBinding
 import com.emedinaa.kotlinapp.databinding.FragmentProductBinding
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModel
-import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fragment_product) {
 
-    private  val args: ProductFragmentArgs by navArgs()
     private val viewModel: ProductViewModel by viewModel()
     private lateinit var adapter: ProductsAdapter
 
@@ -27,7 +25,7 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(true) //Enable menu
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -56,9 +54,7 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
                 viewModel.loadProducts()
             }
         }
-        viewModel.onSuccessDeleteAll.observeNotNull {
-                showMessage(it)
-        }
+        viewModel.onSuccessDeleteAll.observeNotNull { showMessage(it) }
         viewModel.loadingLiveData.observeNotNull { showProgressBarLoading(it, binding.pbProducts) }
     }
 
@@ -81,13 +77,6 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
 
     private fun goToEditProduct(product: Product) {
         findNavController().navigate(ProductFragmentDirections.actionProductFragmentToEditProductFragment(PRODUCT = product))
-    }
-
-    private fun showMessage(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .show()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -7,7 +7,6 @@ import com.emedinaa.kotlinapp.core.base.BaseBindingFragment
 import com.emedinaa.kotlinapp.databinding.FragmentEditProductBinding
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.presentation.viewmodel.EditProductViewModel
-import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class EditProductFragment :
@@ -43,13 +42,6 @@ class EditProductFragment :
             binding.etCostEdit.setText(it.cost.toString())
         }
 
-    }
-
-    private fun showMessage(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .show()
-        }
     }
 
     private fun isValidate(title: String, cost: Double): Boolean {

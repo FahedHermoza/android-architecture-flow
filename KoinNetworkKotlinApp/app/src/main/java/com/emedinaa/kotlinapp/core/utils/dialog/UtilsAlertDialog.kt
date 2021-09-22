@@ -1,4 +1,4 @@
-package com.emedinaa.kotlinapp.presentation
+package com.emedinaa.kotlinapp.core.utils.dialog
 
 import android.content.Context
 import android.graphics.Color

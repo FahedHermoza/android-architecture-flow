@@ -1,4 +1,4 @@
-package com.emedinaa.kotlinapp.presentation
+package com.emedinaa.kotlinapp.core.utils.livedata
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

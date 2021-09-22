@@ -6,7 +6,6 @@ import com.emedinaa.kotlinapp.core.base.BaseBindingFragment
 import com.emedinaa.kotlinapp.databinding.FragmentLoginBinding
 import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.presentation.viewmodel.LoginViewModel
-import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseBindingFragment<FragmentLoginBinding>(R.layout.fragment_login) {
@@ -26,7 +25,7 @@ class LoginFragment : BaseBindingFragment<FragmentLoginBinding>(R.layout.fragmen
     }
 
     override fun initViewModel() {
-        viewModel.onError.observeNotNull { showMessage(it) }
+        viewModel.onError.observeNotNull { showError(it) }
         viewModel.onSuccess.observeNotNull { gotoProduct(it) }
         viewModel.loadingLiveData.observeNotNull { showAlertProgressLoading(it) }
     }
@@ -43,13 +42,6 @@ class LoginFragment : BaseBindingFragment<FragmentLoginBinding>(R.layout.fragmen
             return false
         }
         return true
-    }
-
-    private fun showMessage(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .show()
-        }
     }
 
     private fun gotoProduct(user: User) {

@@ -2,19 +2,14 @@ package com.emedinaa.kotlinapp.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.emedinaa.kotlinapp.core.base.BaseViewModel
 import com.emedinaa.kotlinapp.core.data.DataType
-import com.emedinaa.kotlinapp.data.StorageResult
+import com.emedinaa.kotlinapp.core.utils.livedata.SingleLiveEvent
 import com.emedinaa.kotlinapp.domain.model.MultipleDelete
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.domain.usecase.product.ClearProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.product.FetchProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.user.GetSessionUseCase
-import com.emedinaa.kotlinapp.domain.usecase.user.SaveSessionUseCase
-import com.emedinaa.kotlinapp.presentation.SingleLiveEvent
-import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -22,7 +17,7 @@ import timber.log.Timber
 class ProductViewModel(private val fetchProductUseCase: FetchProductUseCase,
                        private val clearProductUseCase: ClearProductUseCase,
                        private val getSessionUseCase: GetSessionUseCase): BaseViewModel() {
-    val _onError = MutableLiveData<String>()
+    private val _onError = MutableLiveData<String>()
     val onError: LiveData<String?> = _onError
 
     private val _products = MutableLiveData <List<Product>>()

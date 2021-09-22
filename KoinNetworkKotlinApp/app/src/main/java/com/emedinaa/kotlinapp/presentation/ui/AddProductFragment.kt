@@ -5,7 +5,6 @@ import com.emedinaa.kotlinapp.R
 import com.emedinaa.kotlinapp.core.base.BaseBindingFragment
 import com.emedinaa.kotlinapp.databinding.FragmentAddProductBinding
 import com.emedinaa.kotlinapp.presentation.viewmodel.AddProductViewModel
-import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -28,13 +27,6 @@ class AddProductFragment :
         viewModel.onError.observeNotNull { showMessage(it) }
         viewModel.onSuccess.observeNotNull { findNavController().popBackStack() }
         viewModel.loadingLiveData.observeNotNull { showAlertProgressLoading(it) }
-    }
-
-    private fun showMessage(message: String) {
-        view?.let {
-            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                .show()
-        }
     }
 
     private fun isValidate(title: String, cost: Double): Boolean {

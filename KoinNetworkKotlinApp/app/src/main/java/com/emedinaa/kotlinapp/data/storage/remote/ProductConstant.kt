@@ -21,6 +21,6 @@ code:String(objecteId del User)
  */
 object ProductConstant {
 
-    const val APPLICATION_ID: String = "8C354A9D-D6EF-3207-FF0D-9967BD9B2E00"
-    const val REST_API_KEY: String = "F6A49E30-8264-4643-96E0-7B1DA05CF5FA"
+    const val APPLICATION_ID: String = "4F4C866B-B2CA-58AA-FF10-3DFBB190B400"
+    const val REST_API_KEY: String = "0BC65C8F-A734-47AD-86DC-56EAF316D9FF"
 }

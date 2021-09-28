@@ -48,7 +48,6 @@ class ProductsAdapter(
     fun update(data: List<Product>) {
         products = data
         notifyDataSetChanged()
-
     }
 
     inner class ViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root)

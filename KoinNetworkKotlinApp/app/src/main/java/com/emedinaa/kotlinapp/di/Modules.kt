@@ -1,7 +1,7 @@
 package com.emedinaa.kotlinapp.di
 
 import com.emedinaa.kotlinapp.data.AuthenticationRemoteRepository
-import com.emedinaa.kotlinapp.data.ProductPreferencesRespository
+import com.emedinaa.kotlinapp.data.ProductPreferencesRepository
 import com.emedinaa.kotlinapp.data.ProductRemoteRepository
 import com.emedinaa.kotlinapp.data.storage.AuthenticationDataSource
 import com.emedinaa.kotlinapp.data.storage.ProductDataSource
@@ -46,7 +46,7 @@ val repositoryModule = module {
     single<ProductRepository> { ProductRemoteRepository(get()) }
 
     single { PreferencesHelper(androidContext()) }
-    single<ProductSessionRepository> { ProductPreferencesRespository(get()) }
+    single<ProductSessionRepository> { ProductPreferencesRepository(get()) }
 }
 
 val viewmodelModule = module {

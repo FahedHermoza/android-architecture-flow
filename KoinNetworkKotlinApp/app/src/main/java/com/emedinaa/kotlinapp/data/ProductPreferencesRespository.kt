@@ -3,8 +3,9 @@ package com.emedinaa.kotlinapp.data
 import com.emedinaa.kotlinapp.data.storage.local.PreferencesHelper
 import com.emedinaa.kotlinapp.domain.ProductSessionRepository
 
-class ProductPreferencesRespository(private val preferencesHelper: PreferencesHelper): ProductSessionRepository {
-    override fun saveSession(username: String,token:String, objectId:String) {
+class ProductPreferencesRespository(private val preferencesHelper: PreferencesHelper) :
+    ProductSessionRepository {
+    override fun saveSession(username: String, token: String, objectId: String) {
         preferencesHelper.saveSession(username, token, objectId)
     }
 

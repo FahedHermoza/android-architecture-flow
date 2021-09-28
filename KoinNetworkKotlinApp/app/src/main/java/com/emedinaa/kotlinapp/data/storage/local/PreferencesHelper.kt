@@ -6,14 +6,14 @@ import android.content.SharedPreferences
 /**
  *
  */
+private const val MY_NOTES_PREFERENCES = "com.emedinaa.kotlinapp"
+private const val PREFERENCES_USERNAME = "$MY_NOTES_PREFERENCES.username"
+private const val PREFERENCES_TOKEN = "$MY_NOTES_PREFERENCES.token"
+private const val PREFERENCES_OBJECT_ID = "$MY_NOTES_PREFERENCES.objectId"
+
 class PreferencesHelper(private val context: Context) {
 
-    private val MY_NOTES_PREFERENCES = "com.emedinaa.kotlinapp"
-    private val PREFERENCES_USERNAME = "$MY_NOTES_PREFERENCES.username"
-    private val PREFERENCES_TOKEN = "$MY_NOTES_PREFERENCES.token"
-    private val PREFERENCES_OBJECT_ID = "$MY_NOTES_PREFERENCES.objectId"
-
-    fun saveSession(username: String,token:String, objectId:String) {
+    fun saveSession(username: String, token: String, objectId: String) {
         val editor = getEditor()
         editor.putString(PREFERENCES_USERNAME, username)
         editor.putString(PREFERENCES_TOKEN, token)
@@ -37,7 +37,7 @@ class PreferencesHelper(private val context: Context) {
         return preferences.contains(PREFERENCES_USERNAME) && preferences.contains(PREFERENCES_TOKEN)
     }
 
-    fun clearSession(){
+    fun clearSession() {
         val editor = getEditor()
         editor.remove(PREFERENCES_USERNAME)
         editor.remove(PREFERENCES_TOKEN)
@@ -45,7 +45,7 @@ class PreferencesHelper(private val context: Context) {
         editor.apply()
     }
 
-    fun clear(){
+    fun clear() {
         val editor = getEditor()
         editor.clear()
         editor.apply()

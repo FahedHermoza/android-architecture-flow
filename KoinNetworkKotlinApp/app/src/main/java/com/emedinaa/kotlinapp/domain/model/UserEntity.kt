@@ -1,7 +1,5 @@
 package com.emedinaa.kotlinapp.domain.model
 
-import android.os.Message
-import android.os.Parcelable
 import java.io.Serializable
 
 data class User(

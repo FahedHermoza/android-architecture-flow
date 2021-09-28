@@ -1,4 +1,4 @@
-package com.emedinaa.kotlinapp.data.remote
+package com.emedinaa.kotlinapp.data.storage.remote
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,9 +9,9 @@ import com.google.gson.annotations.SerializedName
 
 //User
 data class UserDTO(
-    @SerializedName("user-token") val token:String?,
-    val email:String?,
-    val objectId:String?,
+    @SerializedName("user-token") val token: String?,
+    val email: String?,
+    val objectId: String?,
     val code: Int? = 0,
     val message: String? = ""
 )
@@ -22,30 +22,31 @@ data class LogInRequest(
     val password: String?
 )
 
-data class LogInResponse(@SerializedName("user-token") val token:String?,
-                         val email:String?,
-                         val objectId:String?,
-                         val code: Int? = 0,
-                         val message: String? = ""
+data class LogInResponse(
+    @SerializedName("user-token") val token: String?,
+    val email: String?,
+    val objectId: String?,
+    val code: Int? = 0,
+    val message: String? = ""
 )
 
 //Product
 data class ProductRaw(
-    val name:String?,
-    val description:String?,
-    val cost:Double?,
-    val logo:String?,
-    val code:String?
+    val name: String?,
+    val description: String?,
+    val cost: Double?,
+    val logo: String?,
+    val code: String?
 )
 
 //@SerializedName("name")
 data class ProductDTO(
-    val objectId:String?,
-    val name:String?,
-    val description:String?,
-    val cost:Double?,
-    val logo:String?,
-    val code:String?
+    val objectId: String?,
+    val name: String?,
+    val description: String?,
+    val cost: Double?,
+    val logo: String?,
+    val code: String?
 )
 
 open class BaseResponse(private val status: Int?, val msg: String?) {
@@ -59,18 +60,18 @@ open class BaseResponse(private val status: Int?, val msg: String?) {
 }
 
 class ProductResponse(
-        @field:SerializedName("objectId") val objectId:String?,
-        @field:SerializedName("name") val name:String?,
-        @field:SerializedName("description") val description:String?,
-        @field:SerializedName("cost") val cost:Double?,
-        @field:SerializedName("logo") val logo:String?,
-        @field:SerializedName("code") val code:String?
+    @field:SerializedName("objectId") val objectId: String?,
+    @field:SerializedName("name") val name: String?,
+    @field:SerializedName("description") val description: String?,
+    @field:SerializedName("cost") val cost: Double?,
+    @field:SerializedName("logo") val logo: String?,
+    @field:SerializedName("code") val code: String?
 )
 
 class DeleteResponse(
-        val deletionTime: Long?
+    val deletionTime: Long?
 )
 
 data class DeleteDTO(
-        val deletionTime: Long?
+    val deletionTime: Long?
 )

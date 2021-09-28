@@ -1,4 +1,5 @@
 package com.emedinaa.kotlinapp.core.base
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,7 @@ abstract class BaseBindingFragment<VB : ViewDataBinding>(@LayoutRes protected va
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -58,10 +59,7 @@ abstract class BaseBindingFragment<VB : ViewDataBinding>(@LayoutRes protected va
 
     // Optional
     fun showAlertProgressLoading(show: Boolean) {
-        if (show)
-            showAlertProgress()
-        else
-            hideAlertProgress()
+        if(show) dialog.show() else dialog.hide()
     }
 
     private fun showAlertProgress() {
@@ -73,15 +71,8 @@ abstract class BaseBindingFragment<VB : ViewDataBinding>(@LayoutRes protected va
     }
 
     fun showProgressBarLoading(show: Boolean, view: ProgressBar) {
-        if (show)
-            showProgressBar(view)
-        else
-            hideProgressBar(view)
+        view.visibility = if(show) View.VISIBLE else View.GONE
     }
-
-    private fun showProgressBar(view: ProgressBar) { view.visibility = View.VISIBLE }
-
-    private fun hideProgressBar(view: ProgressBar) { view.visibility = View.GONE }
 
     // Observers
     @MainThread

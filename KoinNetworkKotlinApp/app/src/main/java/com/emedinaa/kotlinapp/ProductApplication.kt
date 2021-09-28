@@ -22,7 +22,8 @@ class ProductApplication : Application() {
                 listOf(
                     repositoryModule,
                     viewmodelModule,
-                    networkModule)
+                    networkModule
+                )
             )
         }
     }

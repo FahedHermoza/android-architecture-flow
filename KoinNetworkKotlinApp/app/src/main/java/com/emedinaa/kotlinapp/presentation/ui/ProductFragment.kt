@@ -24,7 +24,7 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         setHasOptionsMenu(true) //Enable menu
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -76,7 +76,11 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
     }
 
     private fun goToEditProduct(product: Product) {
-        findNavController().navigate(ProductFragmentDirections.actionProductFragmentToEditProductFragment(PRODUCT = product))
+        findNavController().navigate(
+            ProductFragmentDirections.actionProductFragmentToEditProductFragment(
+                PRODUCT = product
+            )
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -84,7 +88,7 @@ class ProductFragment : BaseBindingFragment<FragmentProductBinding>(R.layout.fra
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.action_all_delete){
+        if (item.itemId == R.id.action_all_delete) {
             viewModel.deleteAllProducts()
         }
         return false

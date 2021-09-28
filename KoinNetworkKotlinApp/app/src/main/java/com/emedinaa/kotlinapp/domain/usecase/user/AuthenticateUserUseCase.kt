@@ -7,7 +7,7 @@ import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.domain.usecase.user.AuthenticateUserUseCase.AuthenticateUserUseCaseParams
 import kotlinx.coroutines.flow.Flow
 
-class AuthenticateUserUseCase(private val authenticationRepository: AuthenticationRepository):
+class AuthenticateUserUseCase(private val authenticationRepository: AuthenticationRepository) :
     BaseUseCase.FlowDataBaseUseCase<AuthenticateUserUseCaseParams, User> {
 
     override suspend fun invoke(params: AuthenticateUserUseCaseParams): Flow<DataState<User>> {
@@ -15,5 +15,6 @@ class AuthenticateUserUseCase(private val authenticationRepository: Authenticati
         return authenticationRepository.login(username, password)
     }
 
-    data class AuthenticateUserUseCaseParams(val username: String?, val password: String?) : BaseUseCase.Params()
+    data class AuthenticateUserUseCaseParams(val username: String?, val password: String?) :
+        BaseUseCase.Params()
 }

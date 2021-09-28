@@ -7,5 +7,5 @@ import com.emedinaa.kotlinapp.domain.ProductSessionRepository
  */
 class GetObjectIdUseCase(private val productSessionRepository: ProductSessionRepository) {
 
-    operator fun invoke():String? = productSessionRepository.getObjectId()
+    operator fun invoke(): String? = productSessionRepository.getObjectId()
 }

@@ -13,8 +13,10 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseCase,
-                    private val saveSessionUseCase: SaveSessionUseCase): BaseViewModel() {
+class LoginViewModel(
+    private val authenticationUserUseCase: AuthenticateUserUseCase,
+    private val saveSessionUseCase: SaveSessionUseCase
+) : BaseViewModel() {
     private val _onError = MutableLiveData<String>()
     val onError: LiveData<String?> = _onError
 
@@ -25,9 +27,9 @@ class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseC
 
     fun login(username: String?, password: String?) = launch {
         val params = AuthenticateUserUseCase.AuthenticateUserUseCaseParams(username, password)
-        authenticationUserUseCase.invoke(params).collect{ dataState ->
+        authenticationUserUseCase.invoke(params).collect { dataState ->
             _loadingLiveData.postValue(dataState.loading)
-            when(dataState.type){
+            when (dataState.type) {
                 DataType.Success -> {
                     val data = dataState.data
                     data?.let {

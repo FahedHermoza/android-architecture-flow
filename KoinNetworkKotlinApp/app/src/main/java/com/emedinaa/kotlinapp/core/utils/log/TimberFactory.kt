@@ -4,12 +4,11 @@ import com.emedinaa.kotlinapp.BuildConfig.DEBUG
 import timber.log.Timber
 
 
-
 object TimberFactory {
 
-    fun setupOnDebug(){
+    fun setupOnDebug() {
         Timber.uprootAll()
-        if(DEBUG){
+        if (DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
     }

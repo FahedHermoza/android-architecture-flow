@@ -1,5 +1,6 @@
-package com.emedinaa.kotlinapp.data.remote
+package com.emedinaa.kotlinapp.data.storage.remote
 
+import com.emedinaa.kotlinapp.data.storage.AuthenticationDataSource
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 

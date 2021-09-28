@@ -1,6 +1,10 @@
 package com.emedinaa.kotlinapp.core.data
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -9,7 +13,9 @@ private const val CACHE_TIMEOUT = 5
 
 sealed class DataResult<out T> {
     data class Success<out T>(val data: T) : DataResult<T>()
-    data class Error(val code: Int? = null, val message: String? = null, val body: String? = null) : DataResult<Nothing>()
+    data class Error(val code: Int? = null, val message: String? = null, val body: String? = null) :
+        DataResult<Nothing>()
+
     object NetworkError : DataResult<Nothing>()
 }
 
@@ -26,7 +32,10 @@ suspend fun <T : Any> safeApiCall(
             when (ex) {
                 is TimeoutCancellationException -> DataResult.Error(408)
                 is IOException -> DataResult.NetworkError
-                is HttpException -> DataResult.Error(ex.code(), ex.response()?.errorBody()?.string())
+                is HttpException -> DataResult.Error(
+                    ex.code(),
+                    ex.response()?.errorBody()?.string()
+                )
                 else -> DataResult.Error(null, "Unknown error")
             }
         }

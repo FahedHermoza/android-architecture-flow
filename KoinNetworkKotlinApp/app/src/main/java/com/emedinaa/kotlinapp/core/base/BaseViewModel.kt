@@ -14,7 +14,10 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope by ioScope() {
         try {
             cancel()
         } catch (e: Exception) {
-            Timber.e(e, "The BaseViewModel CoroutineScope does not have an associated job to cancel...")
+            Timber.e(
+                e,
+                "The BaseViewModel CoroutineScope does not have an associated job to cancel..."
+            )
         }
         super.onCleared()
     }

@@ -7,5 +7,5 @@ import com.emedinaa.kotlinapp.domain.ProductSessionRepository
  */
 class GetSessionUseCase(private val productSessionRepository: ProductSessionRepository) {
 
-    operator fun invoke():String? = productSessionRepository.getSession()
+    operator fun invoke(): String? = productSessionRepository.getSession()
 }

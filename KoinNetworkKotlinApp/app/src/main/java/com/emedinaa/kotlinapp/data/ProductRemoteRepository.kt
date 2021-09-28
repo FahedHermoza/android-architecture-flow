@@ -3,21 +3,20 @@ package com.emedinaa.kotlinapp.data
 import com.emedinaa.kotlinapp.core.data.DataResponseHandler
 import com.emedinaa.kotlinapp.core.data.DataState
 import com.emedinaa.kotlinapp.core.data.safeApiCall
-import com.emedinaa.kotlinapp.data.remote.ProductDTO
-import com.emedinaa.kotlinapp.data.remote.UserDTO
 import com.emedinaa.kotlinapp.data.storage.Mapper
 import com.emedinaa.kotlinapp.data.storage.ProductDataSource
+import com.emedinaa.kotlinapp.data.storage.StorageResult
+import com.emedinaa.kotlinapp.data.storage.remote.ProductDTO
 import com.emedinaa.kotlinapp.domain.ProductRepository
 import com.emedinaa.kotlinapp.domain.model.Delete
 import com.emedinaa.kotlinapp.domain.model.MultipleDelete
 import com.emedinaa.kotlinapp.domain.model.Product
-import com.emedinaa.kotlinapp.domain.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
-class ProductRemoteRepository (private val dataSource: ProductDataSource): ProductRepository{
+class ProductRemoteRepository(private val dataSource: ProductDataSource) : ProductRepository {
 
     override suspend fun fetch(token: String): Flow<DataState<List<Product>>> = flow {
         // 1. emit a 'loading event'
@@ -33,13 +32,13 @@ class ProductRemoteRepository (private val dataSource: ProductDataSource): Produ
 
                     return if (!resultObj.isNullOrEmpty()) {
                         var listProduct: ArrayList<Product> = arrayListOf()
-                        for (element  in resultObj){
+                        for (element in resultObj) {
                             listProduct.add(Mapper.productDTOToProduct(element))
                         }
                         DataState.data(message = "message", data = listProduct)
-                    } else if(resultObj.isEmpty()){
+                    } else if (resultObj.isEmpty()) {
                         DataState.data(message = "message", data = emptyList())
-                    }else DataState.error(code = 200, message = "message")
+                    } else DataState.error(code = 200, message = "message")
                 }
             }.getResult()
         )
@@ -63,7 +62,7 @@ class ProductRemoteRepository (private val dataSource: ProductDataSource): Produ
         )
     }
 
-    override suspend fun update(token: String?, product: Product): Flow<DataState<Product>>  = flow {
+    override suspend fun update(token: String?, product: Product): Flow<DataState<Product>> = flow {
         emit(DataState.loading(true))
         val apiCall = safeApiCall { dataSource.update(token, Mapper.productToProductDTO(product)) }
 
@@ -81,17 +80,21 @@ class ProductRemoteRepository (private val dataSource: ProductDataSource): Produ
         )
     }
 
-    override suspend fun delete(token: String?, product: Product): StorageResult<Delete> = withContext(Dispatchers.IO) {
-        when (val result = dataSource.delete(token,Mapper.productToProductDTO(product))) {
-            is StorageResult.Complete -> StorageResult.Complete(
-                   Delete(result.data?.deletionTime ?: 0.toLong())
-            )
-            is StorageResult.Failure -> StorageResult.Failure(result.exception)
-            else -> StorageResult.UnAuthorized(Exception())
+    override suspend fun delete(token: String?, product: Product): StorageResult<Delete> =
+        withContext(Dispatchers.IO) {
+            when (val result = dataSource.delete(token, Mapper.productToProductDTO(product))) {
+                is StorageResult.Complete -> StorageResult.Complete(
+                    Delete(result.data?.deletionTime ?: 0.toLong())
+                )
+                is StorageResult.Failure -> StorageResult.Failure(result.exception)
+                else -> StorageResult.UnAuthorized(Exception())
+            }
         }
-    }
 
-    override suspend fun clear(token: String?, minimalCost: Double?): Flow<DataState<MultipleDelete>> = flow {
+    override suspend fun clear(
+        token: String?,
+        minimalCost: Double?
+    ): Flow<DataState<MultipleDelete>> = flow {
         emit(DataState.loading(true))
         val apiCall = safeApiCall { dataSource.deleteAll(token, minimalCost) }
 

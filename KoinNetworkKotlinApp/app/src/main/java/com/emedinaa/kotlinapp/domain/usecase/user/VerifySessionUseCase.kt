@@ -7,5 +7,5 @@ import com.emedinaa.kotlinapp.domain.ProductSessionRepository
  */
 class VerifySessionUseCase(private val productSessionRepository: ProductSessionRepository) {
 
-    operator fun invoke():Boolean = productSessionRepository.isActiveSession()
+    operator fun invoke(): Boolean = productSessionRepository.isActiveSession()
 }

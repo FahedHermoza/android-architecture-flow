@@ -11,17 +11,18 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 
 class UtilsAlertDialog {
-    companion object{
+    companion object {
 
-        fun setProgressDialog(context: Context, message:String): AlertDialog {
+        fun setProgressDialog(context: Context, message: String): AlertDialog {
             val llPadding = 30
             val ll = LinearLayout(context)
             ll.orientation = LinearLayout.HORIZONTAL
             ll.setPadding(llPadding, llPadding, llPadding, llPadding)
             ll.gravity = Gravity.CENTER
             var llParam = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT)
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
             llParam.gravity = Gravity.CENTER
             ll.layoutParams = llParam
 
@@ -30,8 +31,10 @@ class UtilsAlertDialog {
             progressBar.setPadding(0, 0, llPadding, 0)
             progressBar.layoutParams = llParam
 
-            llParam = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT)
+            llParam = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
             llParam.gravity = Gravity.CENTER
             val tvText = TextView(context)
             tvText.text = message

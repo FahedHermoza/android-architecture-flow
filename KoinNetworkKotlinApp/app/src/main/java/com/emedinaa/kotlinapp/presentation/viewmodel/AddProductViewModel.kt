@@ -13,9 +13,11 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class AddProductViewModel(private val addProductUseCase: AddProductUseCase,
-                            private val getSessionUseCase: GetSessionUseCase,
-                            private val getObjectIdUseCase: GetObjectIdUseCase): BaseViewModel() {
+class AddProductViewModel(
+    private val addProductUseCase: AddProductUseCase,
+    private val getSessionUseCase: GetSessionUseCase,
+    private val getObjectIdUseCase: GetObjectIdUseCase
+) : BaseViewModel() {
     private val _onError = MutableLiveData<String>()
     val onError: LiveData<String?> = _onError
 
@@ -25,26 +27,26 @@ class AddProductViewModel(private val addProductUseCase: AddProductUseCase,
     val onSuccess = SingleLiveEvent<Product?>()
 
     private val token by lazy {
-        getSessionUseCase()?:""
+        getSessionUseCase() ?: ""
     }
 
     private val objectId by lazy {
-        getObjectIdUseCase.invoke()?:""
+        getObjectIdUseCase.invoke() ?: ""
     }
 
-    fun addProduct(title:String, cost:Double) = launch {
-        val product = Product("", title, "", cost, "",objectId)
+    fun addProduct(title: String, cost: Double) = launch {
+        val product = Product("", title, "", cost, "", objectId)
         val params = AddProductUseCase.AddProductUseCaseParams(token, product)
-        addProductUseCase.invoke(params).collect{ dataState ->
+        addProductUseCase.invoke(params).collect { dataState ->
             _loadingLiveData.postValue(dataState.loading)
-            when(dataState.type){
+            when (dataState.type) {
                 DataType.Success -> {
                     val data = dataState.data
                     onSuccess.postValue(data!!)
                 }
 
                 DataType.Error -> {
-                    _onError.postValue( "Ocurrió un error ${dataState.code }")
+                    _onError.postValue("Ocurrió un error ${dataState.code}")
                     Timber.i("Error logueo: ${dataState.message}")
                 }
             }

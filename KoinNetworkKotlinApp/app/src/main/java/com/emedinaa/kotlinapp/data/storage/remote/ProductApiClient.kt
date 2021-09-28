@@ -1,4 +1,4 @@
-package com.emedinaa.kotlinapp.data.remote
+package com.emedinaa.kotlinapp.data.storage.remote
 
 import retrofit2.Response
 import retrofit2.http.Body
@@ -24,37 +24,46 @@ interface ProductApiClient {
 
     //https://api.backendless.com/10D59C7B-6F06-9680-FF6F-D14965C63800/033EA8E0-7219-480B-B934-3F176D26DA7F/data/Product
     @GET("/{applicationid}/{restapikey}/data/Product")
-    suspend fun products(@Path("applicationid") appID:String,
-                         @Path("restapikey") restApiKEY:String,
-                         @HeaderMap headers:Map<String,String>?): List<ProductDTO>
+    suspend fun products(
+        @Path("applicationid") appID: String,
+        @Path("restapikey") restApiKEY: String,
+        @HeaderMap headers: Map<String, String>?
+    ): List<ProductDTO>
 
     //Create Note
     //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>
     @POST("/{applicationid}/{restapikey}/data/Product")
-    suspend fun addProduct(@Path("applicationid") appID:String,
-                           @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
-                           @Body raw: ProductRaw
+    suspend fun addProduct(
+        @Path("applicationid") appID: String,
+        @Path("restapikey") restApiKEY: String, @HeaderMap headers: Map<String, String>?,
+        @Body raw: ProductRaw
     ): ProductResponse
 
     //Delete Note
     //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>/<object-id>
     @DELETE("/{applicationid}/{restapikey}/data/Product/{objectId}")
-    suspend fun deleteProduct(@Path("applicationid") appID:String,
-                              @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
-                              @Path("objectId") objectId:String?): Response<DeleteResponse>
+    suspend fun deleteProduct(
+        @Path("applicationid") appID: String,
+        @Path("restapikey") restApiKEY: String, @HeaderMap headers: Map<String, String>?,
+        @Path("objectId") objectId: String?
+    ): Response<DeleteResponse>
 
     //https://api.backendless.com/<application-id>/<REST-api-key>/data/bulk/<table-name>?where=<where cláusula>
     @Headers("Content-Type: application/json")
     @DELETE("/{applicationid}/{restapikey}/data/bulk/Product")
-    suspend fun deleteProducts(@Path("applicationid") appID: String,
-                               @Path("restapikey") restApiKEY: String, @HeaderMap headers: Map<String, String>?,
-                               @Query("where") where: String?): Int
+    suspend fun deleteProducts(
+        @Path("applicationid") appID: String,
+        @Path("restapikey") restApiKEY: String, @HeaderMap headers: Map<String, String>?,
+        @Query("where") where: String?
+    ): Int
 
     //Update Note
     //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>/<object-id>
     @PUT("/{applicationid}/{restapikey}/data/Product/{objectId}")
-    suspend fun updateProduct(@Path("applicationid") appID:String,
-                              @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
-                              @Path("objectId")objectId:String?,@Body raw: ProductRaw?): ProductResponse
+    suspend fun updateProduct(
+        @Path("applicationid") appID: String,
+        @Path("restapikey") restApiKEY: String, @HeaderMap headers: Map<String, String>?,
+        @Path("objectId") objectId: String?, @Body raw: ProductRaw?
+    ): ProductResponse
 
 }

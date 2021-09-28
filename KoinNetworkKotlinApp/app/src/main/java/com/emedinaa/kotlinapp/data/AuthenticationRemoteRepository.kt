@@ -1,16 +1,18 @@
-package com.emedinaa.kotlinapp.data.storage
+package com.emedinaa.kotlinapp.data
 
 import com.emedinaa.kotlinapp.core.data.DataResponseHandler
 import com.emedinaa.kotlinapp.core.data.DataState
 import com.emedinaa.kotlinapp.core.data.safeApiCall
-import com.emedinaa.kotlinapp.data.remote.AuthenticationDataSource
-import com.emedinaa.kotlinapp.data.remote.UserDTO
+import com.emedinaa.kotlinapp.data.storage.AuthenticationDataSource
+import com.emedinaa.kotlinapp.data.storage.Mapper
+import com.emedinaa.kotlinapp.data.storage.remote.UserDTO
 import com.emedinaa.kotlinapp.domain.AuthenticationRepository
 import com.emedinaa.kotlinapp.domain.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class AuthenticationRemoteRepository(private val dataSource: AuthenticationDataSource): AuthenticationRepository {
+class AuthenticationRemoteRepository(private val dataSource: AuthenticationDataSource) :
+    AuthenticationRepository {
 
     override suspend fun login(username: String?, password: String?): Flow<DataState<User>> = flow {
         // 1. emit a 'loading event'

@@ -6,10 +6,11 @@ import com.emedinaa.kotlinapp.domain.ProductRepository
 import com.emedinaa.kotlinapp.domain.model.Product
 import kotlinx.coroutines.flow.Flow
 
-class UpdateProductUseCase(private val productRepository: ProductRepository):
-    BaseUseCase.FlowDataBaseUseCase<UpdateProductUseCase.UpdateProductUseCaseParams, Product>{
+class UpdateProductUseCase(private val productRepository: ProductRepository) :
+    BaseUseCase.FlowDataBaseUseCase<UpdateProductUseCase.UpdateProductUseCaseParams, Product> {
 
-    data class UpdateProductUseCaseParams(val token:String, val product: Product) : BaseUseCase.Params()
+    data class UpdateProductUseCaseParams(val token: String, val product: Product) :
+        BaseUseCase.Params()
 
     override suspend fun invoke(params: UpdateProductUseCaseParams): Flow<DataState<Product>> {
         val (token, product) = params

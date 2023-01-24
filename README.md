@@ -8,7 +8,7 @@ Ejemplo de arquitectura Android basado en Flow, LiveData, Mapper, SafeCall, y ot
 
 [KoinStorageKotlinApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/KoinStorageKotlinApp): Construido con arquitectura Clean, flow, patron MVVM y algunas librerias (navigation, room, koin, coroutines, livedata, lifecycle).
 
-[Variante 1 - Unidirectional data flow architecture](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/Variante-1): Implementacion intermedia entre MVVM y MVI, utilizando ViewState y Event en el ViewModel, tambien se utilizo StateFlow/MutableStateFlow en vez de LiveData/MutableStateFlow.(Ejemplo de KoinStorageKotlinApp)
+[Variante 1 - Unidirectional data flow architecture](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/%20Variante-1): Implementacion intermedia entre MVVM y MVI, utilizando ViewState y Event en el ViewModel, tambien se utilizo StateFlow/MutableStateFlow en vez de LiveData/MutableStateFlow.(Ejemplo de KoinStorageKotlinApp)
 
 ## Diapositivas
 Puedes encontrar las diapositivas en el siguiente [enlace](https://docs.google.com/presentation/d/1Vaa4ZGt65bbbijyIJlr7RYH1Llod4wq1aoitug7k2Js/edit?usp=sharing).

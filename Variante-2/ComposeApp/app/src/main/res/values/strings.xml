@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ComposeApp</string>
+    <string name="action_delete">Delete</string>
+    <!-- AddProduct -->
+    <string name="title_add_product_fragment">Titulo del Producto</string>
+    <string name="cost_add_product_fragment">Costo</string>
+    <string name="button_add_product_fragment">AGREGAR</string>
+    <!-- EditProduct -->
+    <string name="button_edit_product_fragment">EDITAR</string>
+
+    <!-- Component Custom -->
+    <string name = "help_required">Required</string>
+    <string name = "help_min_height">Minimum 50cm</string>
+    <string name = "help_min_height_valid">Must be equal to or greater than 50cm</string>
+
+        <!-- AlertDialog-->
+    <string name = "dialog_title">Data collected</string>
+    <string name = "dialog_ok">Clear</string>
+    <string name = "dialog_cancel">Cancel</string>
+    <string name="content_description_icon_item">Logo</string>
+</resources>

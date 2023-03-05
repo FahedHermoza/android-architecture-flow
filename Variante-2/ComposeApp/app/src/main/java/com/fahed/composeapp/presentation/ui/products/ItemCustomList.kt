@@ -1,5 +1,6 @@
 package com.fahed.composeapp.core.component
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -22,16 +23,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import com.fahed.composeapp.R
 import com.fahed.composeapp.domain.model.Product
+import com.fahed.composeapp.navigateSingleTopTo
+import com.fahed.composeapp.presentation.ui.EditProduct
+import timber.log.Timber
 
+@Suppress("UNUSED_EXPRESSION")
 @Composable
-fun ListBasic(products: List<Product>) {
+fun ListBasic(products: List<Product>, onEditProductClick: () -> Unit, navController: NavController) {
     val context = LocalContext.current
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         products.forEach {
             ItemListBasic(product = it, modifier = Modifier.clickable {
-            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+                navController.navigate(EditProduct.route)
+                //onEditProductClick
+                Log.e("TAG","Paso")
         }) }
     }
 }

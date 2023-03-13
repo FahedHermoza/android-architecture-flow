@@ -32,13 +32,14 @@ import timber.log.Timber
 
 @Suppress("UNUSED_EXPRESSION")
 @Composable
-fun ListBasic(products: List<Product>, onEditProductClick: () -> Unit, navController: NavController) {
+fun ListBasic(products: List<Product>, navController: NavController, onEditProductClick: () -> Unit) {
     val context = LocalContext.current
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         products.forEach {
             ItemListBasic(product = it, modifier = Modifier.clickable {
                 Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
-                navController.navigate(EditProduct.route)
+                //navController.navigate(EditProduct.route)
+                navController.navigate("${EditProduct.route}/${it.id}")
                 //onEditProductClick
                 Log.e("TAG","Paso")
         }) }

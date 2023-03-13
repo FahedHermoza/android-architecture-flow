@@ -10,26 +10,32 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.fahed.composeapp.R
 import com.fahed.composeapp.core.component.FabCustom
 import com.fahed.composeapp.core.component.ListBasic
-import com.fahed.composeapp.core.theme.ComposeAppTheme
+import com.fahed.composeapp.core.ui.theme.ComposeAppTheme
 import com.fahed.composeapp.domain.model.Product
 import com.fahed.composeapp.navigateSingleTopTo
+import com.fahed.composeapp.presentation.viewmodel.ProductViewModel
+import org.koin.androidx.compose.getViewModel
 import timber.log.Timber
 
 
 @Composable
 fun ProductScreen(
-    onAddProductClick: () -> Unit,
+    navController: NavController,
+    viewModel:ProductViewModel = getViewModel(),
     onEditProductClick: () -> Unit,
-    navController: NavController
+    onAddProductClick: () -> Unit,
 ){
+    val products = viewModel.onProducts.observeAsState().value
     Scaffold(
         floatingActionButton = {
             FabCustom(
@@ -42,10 +48,11 @@ fun ProductScreen(
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
-        Box(modifier = Modifier.fillMaxWidth()
+        Box(modifier = Modifier
+            .fillMaxWidth()
             .padding(bottom = it.calculateBottomPadding()) //Fixed last element of the list
         ){
-            ListBasic(products = getTestProducts(), onEditProductClick, navController)
+            ListBasic(products = products?: emptyList(), navController, onEditProductClick)
             //ListAdvanceList(getTestProducts())
         }
     }
@@ -61,24 +68,6 @@ fun NavHostController.navigateSingleTopTo(route: String) =
         }
         launchSingleTop = true
     }
-
-fun getTestProducts():List<Product>{
-    return listOf(
-        Product(id=0, name= "Zoro Ronoa", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko),
-        Product(id=0, name= "Zoro", cost = 30.9, description = "anime de accion", logo = R.drawable.ic_funko))
-}
-
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

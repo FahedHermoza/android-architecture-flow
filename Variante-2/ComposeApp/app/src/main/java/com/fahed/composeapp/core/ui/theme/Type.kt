@@ -1,4 +1,4 @@
-package com.fahed.composeapp.core.theme
+package com.fahed.composeapp.core.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

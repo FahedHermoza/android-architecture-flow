@@ -10,7 +10,7 @@ Ejemplo de arquitectura Android basado en Flow, LiveData, Mapper, SafeCall, y ot
 
 ### Diagrama de Arquitectura:
 <div align="center">
-        <img width="100%" src="screenshots/FlowArchitecture-01.png" alt="About screen" title="About screen"</img>
+        <img width="100%" src="screenshots/FlowArquitecture-Notes.png" alt="About screen" title="About screen"</img>
         <img height="0" width="16px">
 </div>
 
@@ -18,23 +18,24 @@ Ejemplo de arquitectura Android basado en Flow, LiveData, Mapper, SafeCall, y ot
 [KoinStorageKotlinApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/%20Variante-1): Implementacion intermedia entre MVVM y MVI, utilizando ViewState y Event en el ViewModel, tambien se utilizo StateFlow en vez de LiveData.
 
 **ViewState**
+
 Clase que almacena el estado actual de su vista. Lo emites a traves de un LiveData (state).
 Representado por:
 - Data Class
 - Sealed Class
 
 **Event**
+
 Los eventos son acciones que desencadena la UI.
 Representado por:
 - Sealed Class
 
 **StateFlow**
 
-**MutableStateFlow**
 
 ### Diagrama de Arquitectura:
 <div align="center">
-        <img width="80%" src="screenshots/FlowArquitecture-Variante01.jpg" alt="About screen" title="About screen"</img>
+        <img width="100%" src="screenshots/FlowArquitecture-Variante01.jpg" alt="About screen" title="About screen"</img>
         <img height="0" width="16px">
 </div>
 

@@ -3,18 +3,40 @@ Ejemplo de arquitectura Android basado en Flow, LiveData, Mapper, SafeCall, y ot
 
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/built-by-codebabes.svg)](https://forthebadge.com)
 
-## Proyecto
+## Proyecto Notas
 [KoinNetworkKotlinApp](https://github.com/FahedHermoza/reviewArchitectures/tree/main/KoinNetworkKotlinApp): Construido con arquitectura Clean, flow, patron MVVM y algunas librerias (navigation, retrofit, preferences, coroutines, livedata, lifecycle).
 
 [KoinStorageKotlinApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/KoinStorageKotlinApp): Construido con arquitectura Clean, flow, patron MVVM y algunas librerias (navigation, room, koin, coroutines, livedata, lifecycle).
 
 ### Diagrama de Arquitectura:
 <div align="center">
-        <img width="80%" src="screenshots/FlowArchitecture-01.png" alt="About screen" title="About screen"</img>
+        <img width="100%" src="screenshots/FlowArchitecture-01.png" alt="About screen" title="About screen"</img>
         <img height="0" width="16px">
 </div>
 
-[Variante 1 - Unidirectional data flow architecture](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/%20Variante-1): Implementacion intermedia entre MVVM y MVI, utilizando ViewState y Event en el ViewModel, tambien se utilizo StateFlow/MutableStateFlow en vez de LiveData/MutableStateFlow.(Ejemplo de KoinStorageKotlinApp)
+## Variante: Unidirectional data flow
+[KoinStorageKotlinApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/%20Variante-1): Implementacion intermedia entre MVVM y MVI, utilizando ViewState y Event en el ViewModel, tambien se utilizo StateFlow en vez de LiveData.
+
+**ViewState**
+Clase que almacena el estado actual de su vista. Lo emites a traves de un LiveData (state).
+Representado por:
+- Data Class
+- Sealed Class
+
+**Event**
+Los eventos son acciones que desencadena la UI.
+Representado por:
+- Sealed Class
+
+**StateFlow**
+
+**MutableStateFlow**
+
+### Diagrama de Arquitectura:
+<div align="center">
+        <img width="80%" src="screenshots/FlowArquitecture-Variante01.jpg" alt="About screen" title="About screen"</img>
+        <img height="0" width="16px">
+</div>
 
 ## Diapositivas
 Puedes encontrar las diapositivas en el siguiente [enlace](https://docs.google.com/presentation/d/1Vaa4ZGt65bbbijyIJlr7RYH1Llod4wq1aoitug7k2Js/edit?usp=sharing).

@@ -45,6 +45,7 @@ fun TfCustom(modifier: Modifier = Modifier,
              isLikeButton: Boolean = false,
              keyboardOptions: KeyboardOptions? = null,
              clearValue: Boolean = false,
+             setText: String = "",
              onValueChanged: (String) -> Unit) { //Manipula la logica con funciones de 1er orden
     var textValue by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
@@ -59,7 +60,7 @@ fun TfCustom(modifier: Modifier = Modifier,
         val keyboard = LocalSoftwareKeyboardController.current
         val focusManager = LocalFocusManager.current
 
-        OutlinedTextField(value = textValue,
+        OutlinedTextField(value = setText.ifBlank { textValue },
             onValueChange = {
                 if(maxLength == null)
                     textValue = it

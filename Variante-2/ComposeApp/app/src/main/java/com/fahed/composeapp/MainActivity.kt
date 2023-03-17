@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -25,10 +26,8 @@ import com.fahed.composeapp.presentation.ui.Products
  * https://developer.android.com/jetpack/compose/mental-model?hl=es-419 (Recomposición)
  *
  * Improve following points.
- * 0. Not show information of title and cost in EditScreen
- * 1. Pass navigation as a argument to diferents screen.
- * 2. Init modules with koin without get()
- * 3. Not function preview of function composable
+ * 1. Init modules with koin without get()
+ * 2. Not function preview of function composable
  */
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -36,7 +35,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeAppTheme {
-                Navigation()
+                Scaffold{
+                    Navigation()
+                }
             }
         }
     }
@@ -51,12 +52,11 @@ fun Navigation(){
     ) {
         composable(route = Products.route) {
             ProductScreen(
-                navController = navController,
                 onAddProductClick = {
-                    //navController.navigateSingleTopTo(AddProduct.route)
+                    navController.navigateSingleTopTo(AddProduct.route)
                 },
                 onEditProductClick = {
-                    //navController.navigateSingleTopTo(EditProduct.route)
+                    id -> navController.navigateToEditProduct(idProductType = "$id")
                 })
         }
         composable(route = AddProduct.route) {
@@ -73,11 +73,9 @@ fun Navigation(){
 
 fun NavHostController.navigateSingleTopTo(route: String) =
     this.navigate(route) {
-        //Configuration
-        popUpTo(
-            this@navigateSingleTopTo.graph.findStartDestination().id
-        ) {
-            saveState = true
-        }
         launchSingleTop = true
     }
+
+private fun NavHostController.navigateToEditProduct(idProductType: String) {
+    this.navigateSingleTopTo("${EditProduct.route}/$idProductType")
+}

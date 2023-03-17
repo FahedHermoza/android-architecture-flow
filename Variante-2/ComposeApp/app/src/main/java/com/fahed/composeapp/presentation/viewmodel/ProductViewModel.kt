@@ -20,21 +20,16 @@ class ProductViewModel(
 ) : BaseViewModel() {
 
     private val _products = MutableLiveData<List<Product>>()
-    val onProducts: LiveData<List<Product>> = _products
+    val onProducts: LiveData<List<Product>> get() = _products
 
-    private val _productSelected = MutableLiveData<Product>()
-    val onProductSelected: LiveData<Product> = _productSelected
+    private val _productSelected = MutableLiveData(Product())
+    val onProductSelected: LiveData<Product> get() = _productSelected
 
-    init {
-        loadProducts()
-    }
-
-    private fun loadProducts() = launch {
+    suspend fun loadProducts() {
         fetchProductUseCase.invoke().collect {
             _products.postValue(it)
         }
     }
-
 
     fun addProduct(title: String, cost: Double, description: String) = launch {
         var product = Product(0, title, cost, description, R.drawable.ic_funko)
@@ -42,9 +37,7 @@ class ProductViewModel(
         addProductUseCase.invoke(params)
     }
 
-    fun editProduct(title: String, cost: Double, product: Product) = launch {
-        product.name = title
-        product.cost = cost
+    fun editProduct(product: Product) = launch {
         val params = UpdateProductUseCase.UpdateProductUseCaseParams(product)
         updateProductUseCase.invoke(params)
     }
@@ -53,9 +46,13 @@ class ProductViewModel(
         clearProductUseCase.invoke()
     }
 
-    fun getProduct(id: Int) = launch {
+    suspend fun getProduct(id: Int) {
         val params = GetProductUseCase.GetProductUseCaseParams(id)
         val product = getProductUseCase.invoke(params)
-        _productSelected.postValue(product)
+        _productSelected.value = product
+    }
+
+    fun setProduct(onChangeData: () -> Product?){
+        _productSelected.value = onChangeData()
     }
 }

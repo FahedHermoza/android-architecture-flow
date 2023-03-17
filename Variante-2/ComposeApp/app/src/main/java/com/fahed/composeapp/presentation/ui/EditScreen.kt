@@ -20,6 +20,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.fahed.composeapp.R
 import com.fahed.composeapp.core.component.CustomSpacer
 import com.fahed.composeapp.core.component.TfCustom
@@ -51,26 +53,11 @@ fun EditScreen(navController: NavController,
                idProductType: String,
                viewModel: ProductViewModel = getViewModel()
 ) {
-    //Method 1: With observer onProducts
-    val products = viewModel.onProducts.observeAsState().value
-    val product = getProduct(products?: emptyList(), idProductType.toInt()) ?: Product()
-    var titleValue by remember { mutableStateOf(product.name) }
-    var costValue by remember { mutableStateOf(product.cost.toString()) }
     val context = LocalContext.current
-
-    //Method 2: With observer onProduct
-    /*var titleValue by remember { mutableStateOf("") }
-    var costValue by remember { mutableStateOf("") }
-    val context = LocalContext.current*/
-
-    //viewModel.getProduct( idProductType?.toInt() ?: -1)
-    //val product = viewModel.onProductSelected.observeAsState().value ?: Product()
-
-    //titleValue = product.name
-    //costValue = product.cost.toString()
-
-    Log.e("TAG", "Title value: $titleValue")
-    Log.e("TAG", "Cost value: $costValue")
+    val product = viewModel.onProductSelected.observeAsState()
+    LaunchedEffect(key1 = product.value?.isEmpty() ){
+        viewModel.getProduct(idProductType.toInt())
+    }
 
     Scaffold(
         topBar = {
@@ -97,28 +84,25 @@ fun EditScreen(navController: NavController,
                 paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
                 labelRes = R.string.title_add_product_fragment,
                 isRequired = true,
-                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words)
-            ) { titleValue = it }
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+                setText = product.value?.name ?: ""
+            ) { viewModel.setProduct { product.value?.copy(name = it) }   }
             CustomSpacer()
             TfCustom(
                 paddingTop = dimensionResource(id = R.dimen.common_padding_default),
                 labelRes = R.string.cost_add_product_fragment,
                 isRequired = true,
-                minValue = integerResource(id = R.integer.height_min_value),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
-                )
-            ) { costValue = it }
+                ),
+                setText = if(product.value?.cost.toString() == "0.0") "" else product.value?.cost.toString()
+            ) { viewModel.setProduct { product.value?.copy(cost = if(it.isNotBlank()) it.toDouble() else 0.0) }  }
             CustomSpacer(size = R.dimen.common_padding_max)
             Button(
                 onClick = {
-                    if (isValid(title = titleValue, cost = costValue)) {
-                        viewModel.editProduct(
-                            title = titleValue,
-                            cost = costValue.toDouble(),
-                            product = product
-                        )
+                    if (isValid(title = product.value?.name ?: "", cost = product.value?.cost ?: 0.0)) {
+                        viewModel.editProduct(product = product.value ?: Product())
                         navController.popBackStack()
                     } else {
                         Toast.makeText(context, R.string.help_invalid_data, Toast.LENGTH_SHORT).show()
@@ -132,15 +116,11 @@ fun EditScreen(navController: NavController,
     }
 }
 
-fun getProduct(list: List<Product>, id: Int): Product?{
-    list.forEach { product -> if(  product.id == id) return product }
-    return null
-}
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun EditScreenPreview() {
     ComposeAppTheme {
-        //EditScreen()
+        //EditScreen(navController = rememberNavController(),
+        //    idProductType = "0")
     }
 }

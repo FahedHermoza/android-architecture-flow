@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.fahed.composeapp.R
 import com.fahed.composeapp.core.component.CustomSpacer
 import com.fahed.composeapp.core.component.TfCustom
@@ -89,7 +90,7 @@ fun AddProductScreen(navController: NavController,
             CustomSpacer(size = R.dimen.common_padding_max)
             Button(
                 onClick = {
-                    if (isValid(title = titleValue, cost = costValue)) {
+                    if (isValid(title = titleValue, cost = costValue.toDouble())) {
                         viewModel.addProduct(
                             title = titleValue,
                             cost = costValue.toDouble(),
@@ -108,8 +109,8 @@ fun AddProductScreen(navController: NavController,
     }
 }
 
-fun isValid(title:String, cost:String): Boolean{
-    if(title.isNotEmpty() && cost.isNotEmpty() && cost.toDouble()>0.0) return true
+fun isValid(title:String, cost:Double): Boolean{
+    if(title.isNotEmpty() && cost>0.0) return true
     return false
 }
 
@@ -117,7 +118,7 @@ fun isValid(title:String, cost:String): Boolean{
 @Composable
 fun AddProductPreview() {
     ComposeAppTheme {
-        //val mockData = NavController()
+        //val mockData = rememberNavController()
         //AddProductScreen(mockData)
     }
 }

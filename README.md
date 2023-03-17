@@ -10,7 +10,7 @@ Ejemplo de arquitectura Android basado en Flow, LiveData, Mapper, SafeCall, y ot
 
 ### Diagrama de Arquitectura:
 <div align="center">
-        <img width="100%" src="screenshots/FlowArquitecture-Notes.png" alt="About screen" title="About screen"</img>
+        <img width="100%" src="screenshots/FlowArquitecture-Notes.jpg" alt="About screen" title="About screen"</img>
         <img height="0" width="16px">
 </div>
 

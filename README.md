@@ -10,7 +10,7 @@ Ejemplo de arquitectura Android basado en Flow, LiveData, Mapper, SafeCall, y ot
 
 ### Diagrama de Arquitectura:
 <div align="center">
-        <img width="100%" src="screenshots/FlowArquitecture-Notes.jpg" alt="About screen" title="About screen"</img>
+        <img width="100%" src="screenshots/FlowArquitecture-Notes.png" alt="About screen" title="About screen"</img>
         <img height="0" width="16px">
 </div>
 
@@ -30,11 +30,11 @@ Representado por:
 
 **StateFlow:** Flujo observable contenedor de estados que emite actualizaciones de estados actuales y nuevas a sus recopiladores.
 
-| Descripción | StateFlow| LiveData|
+| Descripción | LiveData | StateFlow |
 |:-------------------:|---|---|
 | Contenedor de datos observables | YES | YES |
 | Patron de diseño: OBSERVER | YES | YES |
-| Requiere estado inicial en el constructor | YES | NO |
+| Requiere estado inicial en el constructor | NO | YES |
 | Dar de baja al consumidor cuando la View pasa a STOPPED | AUTOMATIC | MANUAL (lifecycle.repeatOnLifecycle) |
 
 ### Diagrama de Arquitectura:

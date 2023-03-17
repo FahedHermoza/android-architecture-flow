@@ -10,28 +10,32 @@ Ejemplo de arquitectura Android basado en Flow, LiveData, Mapper, SafeCall, y ot
 
 ### Diagrama de Arquitectura:
 <div align="center">
-        <img width="100%" src="screenshots/FlowArquitecture-Notes.jpg" alt="About screen" title="About screen"</img>
+        <img width="100%" src="screenshots/FlowArquitecture-Notes.png" alt="About screen" title="About screen"</img>
         <img height="0" width="16px">
 </div>
 
 ## Variante: Unidirectional data flow
 [KoinStorageKotlinApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/%20Variante-1): Implementacion intermedia entre MVVM y MVI, utilizando ViewState y Event en el ViewModel, tambien se utilizo StateFlow en vez de LiveData.
 
-**ViewState**
+**ViewState:** Clase que almacena el estado actual de su vista. Lo emites a traves de un LiveData o State Flow (state).
 
-Clase que almacena el estado actual de su vista. Lo emites a traves de un LiveData (state).
 Representado por:
 - Data Class
 - Sealed Class
 
-**Event**
+**Event:** Los eventos son acciones que desencadena la UI.
 
-Los eventos son acciones que desencadena la UI.
 Representado por:
 - Sealed Class
 
-**StateFlow**
+**StateFlow:** Flujo observable contenedor de estados que emite actualizaciones de estados actuales y nuevas a sus recopiladores.
 
+| Descripción | StateFlow| LiveData|
+|:-------------------:|---|---|
+| Contenedor de datos observables | YES | YES |
+| Patron de diseño: OBSERVER | YES | YES |
+| Requiere estado inicial en el constructor | YES | NO |
+| Dar de baja al consumidor cuando la View pasa a STOPPED | AUTOMATIC | MANUAL (lifecycle.repeatOnLifecycle) |
 
 ### Diagrama de Arquitectura:
 <div align="center">

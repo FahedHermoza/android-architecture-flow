@@ -14,6 +14,11 @@ Ejemplos de arquitecturas Android MVVM basados en Flow.
         <img height="0" width="16px">
 </div>
 
+### Usos de FLow:
+- Permite transmitir informacion entre las diferentes capas de Clean. Desde la capa de Data -> Domain -> Presentation.
+- Permite recibir notificiones de cambios en su base de datos usando "Lecturas observables" a traves de Flow y Room(version 2.2 o superior).
+- Permite que cualquier View observe cambios en datos relevantes en el ViewModel y actualice la UI, a traves de StateFlow.
+
 ## Variante: Unidirectional data flow
 [StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/%20Variante-1): Implementacion intermedia entre MVVM y MVI, utilizando ViewState y Event en el ViewModel, tambien se utilizo StateFlow en vez de LiveData.
 

@@ -4,7 +4,8 @@ Ejemplos de arquitecturas Android MVVM basados en Flow.
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/built-by-codebabes.svg)](https://forthebadge.com)
 
 ## Proyecto Notas
-[NetworkApp](https://github.com/FahedHermoza/reviewArchitectures/tree/main/KoinNetworkKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (navigation, lifecycle, livedata), Coroutines (Flow) y algunas librerias ( retrofit, preferences, timber).
+[NetworkApp](https://github.com/FahedHermoza/reviewArchitectures/tree/main/KoinNetworkKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (navigation, lifecycle, livedata), Coroutines (Flow) y algunas librerias ( retrofit, preferences, timber). 
+*Requiere configurar BD remota en Backendless.
 
 [StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/KoinStorageKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (room, navigation, lifecycle, livedata), Coroutines (Flow) y algunas librerias (koin, timber).
 
@@ -20,7 +21,7 @@ Ejemplos de arquitecturas Android MVVM basados en Flow.
 - Permite que cualquier View observe cambios en datos relevantes en el ViewModel y actualice la UI, a traves de StateFlow.
 
 ## Variante: Unidirectional data flow
-[StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/%20Variante-1): Implementacion intermedia entre MVVM y MVI, utilizando ViewState y Event en el ViewModel, tambien se utilizo StateFlow en vez de LiveData.
+[StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/Variante-1): Implementacion intermedia entre MVVM y MVI, utilizando ViewState y Event en el ViewModel, tambien se utilizo StateFlow en vez de LiveData.
 
 **ViewState:** Clase que almacena el estado actual de su vista. Lo emites a traves de un LiveData o State Flow (state).
 
@@ -49,7 +50,7 @@ Representado por:
 </div>
 
 ## Variante: Jetpack Compose
-[StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/%20Variante-2): Implementacion cambiando la capa de presentacion con la libreria Jeckpack Compose y Navigation Compose.
+[StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/Variante-2): Implementacion cambiando la capa de presentacion con la libreria Jeckpack Compose y Navigation Compose.
 
 **Jetpack Compose:** Se ha vuelto más fácil crear UI en tiempo de ejecución en lugar de definir una UI estática que pueda rellenarse con datos. En la mayoría de los casos optimizas el tiempo de desarrollo y la facilidad de mantener código. 
 - El [radar de thoughtworks](https://www.thoughtworks.com/es-es/radar/languages-and-frameworks/jetpack-compose) sugiere adoptarlo desde 2021 (Martin Fowler - Chief Scientist).

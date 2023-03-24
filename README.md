@@ -16,7 +16,7 @@ Ejemplos de arquitecturas Android MVVM basados en Flow.
 
 ### Usos de FLow:
 - Permite transmitir informacion entre las diferentes capas de Clean. Desde la capa de Data -> Domain -> Presentation.
-- Permite recibir notificiones de cambios en su base de datos usando "Lecturas observables" a traves de Flow y Room(version 2.2 o superior).
+- Permite recibir notificaciones de cambios en su base de datos usando "Lecturas observables" a traves de Flow y Room(version 2.2 o superior).
 - Permite que cualquier View observe cambios en datos relevantes en el ViewModel y actualice la UI, a traves de StateFlow.
 
 ## Variante: Unidirectional data flow
@@ -51,7 +51,9 @@ Representado por:
 ## Variante: Jetpack Compose
 [StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/%20Variante-2): Implementacion cambiando la capa de presentacion con la libreria Jeckpack Compose y Navigation Compose.
 
-**Jetpack Compose:**
+**Jetpack Compose:** Se ha vuelto más fácil crear UI en tiempo de ejecución en lugar de definir una UI estática que pueda rellenarse con datos. En la mayoría de los casos optimizas el tiempo de desarrollo y la facilidad de mantener código. 
+- El [radar de thoughtworks](https://www.thoughtworks.com/es-es/radar/languages-and-frameworks/jetpack-compose) sugiere adoptarlo desde 2021 (Martin Fowler - Chief Scientist).
+- Tendencia en el mercado construir Interfaces Declarativas (SwiftUI, Flutter, React).
 
 ### Diagrama de Arquitectura:
 <div align="center">

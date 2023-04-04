@@ -37,8 +37,8 @@ task clean(type: Delete) {
 
 ext {
     minSdkVersion = 21
-    targetSdkVersion = 30
-    compileSdkVersion = 30
+    targetSdkVersion = 31
+    compileSdkVersion = 31
 
     androidXVersion = '1.3.2'
     appCompatVersion = '1.2.0'
@@ -56,7 +56,8 @@ ext {
 
     //TODO room
     //https://maven.google.com/web/index.html?q=room#androidx.room:room-runtime:2.2.5
-    roomVersion = "2.2.5"
+    // Resolve error with MacM1 version 2.4.0-alpha03 or more
+    roomVersion = "2.4.0-alpha03"
 
     //TODO coroutines
     coroutines = '1.3.2'

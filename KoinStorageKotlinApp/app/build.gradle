@@ -80,6 +80,7 @@ dependencies {
     //TODO Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
 
     //TODO Room
     implementation "androidx.room:room-runtime:$roomVersion"
@@ -88,6 +89,8 @@ dependencies {
 
     //TODO coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test"
 
     //TODO lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"

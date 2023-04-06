@@ -5,11 +5,11 @@ import com.emedinaa.kotlinapp.domain.ProductRepository
 import com.emedinaa.kotlinapp.domain.model.Product
 
 class UpdateProductUseCase(private val productDatabaseRepository: ProductRepository) :
-    BaseUseCase.SimpleBaseUseCase<UpdateProductUseCase.UpdateProductUseCaseParams, Unit> {
+    BaseUseCase.SimpleBaseUseCase<UpdateProductUseCase.Params, Unit> {
 
-    data class UpdateProductUseCaseParams(val product: Product) : BaseUseCase.Params()
+    data class Params(val product: Product) : BaseUseCase.Params()
 
-    override suspend fun invoke(params: UpdateProductUseCaseParams) {
+    override suspend fun invoke(params: Params) {
         val (product) = params // destructuring
         productDatabaseRepository.updateProduct(product)
     }

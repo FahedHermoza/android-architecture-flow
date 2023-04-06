@@ -8,7 +8,6 @@ import com.emedinaa.kotlinapp.domain.usecase.AddProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.ClearProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.FetchProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.UpdateProductUseCase
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -34,14 +33,14 @@ class ProductViewModel(
 
     fun addNewProduct(title: String, cost: Double, description: String) = launch {
         var product = Product(0, title, cost, description, R.mipmap.ic_funko)
-        val params = AddProductUseCase.AddProductUseCaseParams(product)
+        val params = AddProductUseCase.Params(product)
         addProductUseCase.invoke(params)
     }
 
     fun editProduct(title: String, cost: Double, product: Product) = launch {
         product.name = title
         product.cost = cost
-        val params = UpdateProductUseCase.UpdateProductUseCaseParams(product)
+        val params = UpdateProductUseCase.Params(product)
         updateProductUseCase.invoke(params)
     }
 

@@ -7,7 +7,7 @@ Ejemplos de arquitecturas Android MVVM basados en Flow.
 [NetworkApp](https://github.com/FahedHermoza/reviewArchitectures/tree/main/KoinNetworkKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (navigation, lifecycle, livedata), Coroutines (Flow) y algunas librerias ( retrofit, preferences, timber). 
 *Requiere configurar BD remota en Backendless.
 
-[StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/KoinStorageKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (room, navigation, lifecycle, livedata), Coroutines (Flow) y algunas librerias (koin, timber).
+[StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/KoinStorageKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (room, navigation, lifecycle, livedata), Coroutines (Flow) y algunas librerias (koin, timber, junit, mockito).
 
 ### Diagrama de Arquitectura:
 <div align="center">

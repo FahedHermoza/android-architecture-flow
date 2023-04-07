@@ -16,7 +16,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class FetchProductUseCase {
+class FetchProductUseCaseTest {
     // UseCase
     private lateinit var useCase: FetchProductUseCase
     // Mocks

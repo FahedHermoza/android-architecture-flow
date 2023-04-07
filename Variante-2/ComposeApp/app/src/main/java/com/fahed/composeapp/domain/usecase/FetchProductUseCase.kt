@@ -4,11 +4,6 @@ import com.fahed.composeapp.core.domain.BaseUseCase
 import com.fahed.composeapp.domain.ProductRepository
 import com.fahed.composeapp.domain.model.Product
 import kotlinx.coroutines.flow.Flow
-/*
-class FetchProductUseCase(private val productDatabaseRepository: ProductRepository) {
-
-    operator fun invoke() = run { productDatabaseRepository.getAllProducts() }
-}*/
 
 //Use FlowEmptyBaseUseCase
 class FetchProductUseCase(private val productDatabaseRepository: ProductRepository) :

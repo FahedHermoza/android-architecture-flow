@@ -33,12 +33,12 @@ class ProductViewModel(
 
     fun addProduct(title: String, cost: Double, description: String) = launch {
         var product = Product(0, title, cost, description, R.drawable.ic_funko)
-        val params = AddProductUseCase.AddProductUseCaseParams(product)
+        val params = AddProductUseCase.Params(product)
         addProductUseCase.invoke(params)
     }
 
     fun editProduct(product: Product) = launch {
-        val params = UpdateProductUseCase.UpdateProductUseCaseParams(product)
+        val params = UpdateProductUseCase.Params(product)
         updateProductUseCase.invoke(params)
     }
 
@@ -47,7 +47,7 @@ class ProductViewModel(
     }
 
     suspend fun getProduct(id: Int) {
-        val params = GetProductUseCase.GetProductUseCaseParams(id)
+        val params = GetProductUseCase.Params(id)
         val product = getProductUseCase.invoke(params)
         _productSelected.value = product
     }

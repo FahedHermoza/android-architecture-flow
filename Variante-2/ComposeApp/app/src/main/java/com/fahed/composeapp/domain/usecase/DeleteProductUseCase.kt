@@ -5,12 +5,12 @@ import com.fahed.composeapp.domain.ProductRepository
 import com.fahed.composeapp.domain.model.Product
 
 class DeleteProductUseCase(private val productDatabaseRepository: ProductRepository) :
-    BaseUseCase.SimpleBaseUseCase<DeleteProductUseCase.DeleteProductUseCaseParams, Unit> {
+    BaseUseCase.SimpleBaseUseCase<DeleteProductUseCase.Params, Unit> {
 
-    override suspend fun invoke(params: DeleteProductUseCaseParams) {
+    override suspend fun invoke(params: Params) {
         val (product) = params // destructuring
         productDatabaseRepository.deleteProduct(product)
     }
 
-    data class DeleteProductUseCaseParams(val product: Product) : BaseUseCase.Params()
+    data class Params(val product: Product) : BaseUseCase.Params()
 }

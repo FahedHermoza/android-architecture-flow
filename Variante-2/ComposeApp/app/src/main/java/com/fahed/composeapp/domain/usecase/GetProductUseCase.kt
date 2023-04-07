@@ -5,12 +5,12 @@ import com.fahed.composeapp.domain.ProductRepository
 import com.fahed.composeapp.domain.model.Product
 
 class GetProductUseCase(private val productDatabaseRepository: ProductRepository) :
-    BaseUseCase.SimpleBaseUseCase<GetProductUseCase.GetProductUseCaseParams, Product> {
+    BaseUseCase.SimpleBaseUseCase<GetProductUseCase.Params, Product> {
 
-    override suspend fun invoke(params: GetProductUseCaseParams): Product {
+    override suspend fun invoke(params: Params): Product {
         val (idProduct) = params // destructuring
         return productDatabaseRepository.getProduct(idProduct)
     }
 
-    data class GetProductUseCaseParams(val idProduct: Int) : BaseUseCase.Params()
+    data class Params(val idProduct: Int) : BaseUseCase.Params()
 }

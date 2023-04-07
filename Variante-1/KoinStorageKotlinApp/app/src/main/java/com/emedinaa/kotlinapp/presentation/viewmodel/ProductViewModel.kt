@@ -47,20 +47,20 @@ class ProductViewModel(
 
     }
 
-    private fun addNewProduct(title: String, cost: Double, description: String) = launch {
+    fun addNewProduct(title: String, cost: Double, description: String) = launch {
         var product = Product(0, title, cost, description, R.mipmap.ic_funko)
-        val params = AddProductUseCase.AddProductUseCaseParams(product)
+        val params = AddProductUseCase.Params(product)
         addProductUseCase.invoke(params)
     }
 
-    private fun editProduct(title: String, cost: Double, product: Product) = launch {
+    fun editProduct(title: String, cost: Double, product: Product) = launch {
         product.name = title
         product.cost = cost
-        val params = UpdateProductUseCase.UpdateProductUseCaseParams(product)
+        val params = UpdateProductUseCase.Params(product)
         updateProductUseCase.invoke(params)
     }
 
-    private fun deleteAllProducts() = launch {
+    fun deleteAllProducts() = launch {
         clearProductUseCase.invoke()
     }
 }

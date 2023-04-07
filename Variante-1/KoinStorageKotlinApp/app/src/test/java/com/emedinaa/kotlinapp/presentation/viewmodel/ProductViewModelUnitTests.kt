@@ -1,24 +1,28 @@
 package com.emedinaa.kotlinapp.presentation.viewmodel
 
-import org.junit.Rule
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner //Error
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import com.emedinaa.kotlinapp.data.ProductDatabaseRepository
-import com.emedinaa.kotlinapp.data.storage.ProductDataSource
-import com.emedinaa.kotlinapp.domain.ProductRepository
-import com.emedinaa.kotlinapp.domain.model.Product
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.emedinaa.kotlinapp.domain.usecase.AddProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.ClearProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.FetchProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.UpdateProductUseCase
+import com.emedinaa.kotlinapp.domain.usecase.mock.RepositoryMock
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.kotlin.mock
+import org.junit.runner.RunWith
+import org.mockito.Mockito
+import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import kotlin.time.ExperimentalTime
 
 /***
  * https://stackoverflow.com/questions/48049131/cannot-resolve-symbol-instanttaskexecutorrule/56073388#56073388
@@ -28,42 +32,78 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 @RunWith(MockitoJUnitRunner::class)
 class ProductViewModelUnitTests {
     @get:Rule
-    val taskExecutorRule = InstantTaskExecutorRule()
+    val instantExecutorRule = InstantTaskExecutorRule()
+    private val testDispatcher = StandardTestDispatcher()
 
-    @Mock
-    private lateinit var productDataSource: ProductDataSource
+    private val fetchProductUseCase = Mockito.mock(FetchProductUseCase::class.java)
+    private val clearProductUseCase = Mockito.mock(ClearProductUseCase::class.java)
+    private val addProductUseCase = Mockito.mock(AddProductUseCase::class.java)
+    private val updateProductUseCase = Mockito.mock(UpdateProductUseCase::class.java)
 
+    private lateinit var productViewModel: ProductViewModel
 
-    private lateinit var productRepository: ProductRepository
-
-    private lateinit var viewModel: ProductViewModel
-    private lateinit var fetchProductUseCase: FetchProductUseCase
-    private lateinit var clearProductUseCase: ClearProductUseCase
-    private lateinit var addProductUseCase: AddProductUseCase
-    private lateinit var updateProductUseCase: UpdateProductUseCase
-
-    private lateinit var productsObserver: Observer<LiveData<List<Product>>>
     @Before
-    fun setup() {
-        // 1
-        //var productDataBase = ProductDatabaseDataSource(productDataSource)
-        productRepository = ProductDatabaseRepository(productDataSource)
-        fetchProductUseCase = FetchProductUseCase(productRepository)
-        clearProductUseCase = ClearProductUseCase(productRepository)
-        addProductUseCase = AddProductUseCase(productRepository)
-        updateProductUseCase = UpdateProductUseCase(productRepository)
-        //viewModel = ProductViewModel(fetchProductUseCase, clearProductUseCase, addProductUseCase, updateProductUseCase)
+    fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+    }
 
-        productsObserver = mock()
-        //viewModel.loadProducts().observeForever(fetchProductUseCase)
+    private fun buildViewModel() {
+        productViewModel = ProductViewModel(
+            fetchProductUseCase,
+            clearProductUseCase,
+            addProductUseCase,
+            updateProductUseCase
+        )
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
+    //https://developer.android.com/kotlin/flow/test?hl=es-419
+    // Will be feature in the future
+    @Test
+    fun `init loadProduct with list`()= runTest {}
+
+    @Test
+    fun `check addNewProduct is add product`()= runTest {
+        //given
+        val mock = RepositoryMock.product()
+        mock.logo = 2131558400 //Icon by default
+        //when
+        buildViewModel()
+        productViewModel.addNewProduct(title = mock.name, cost = mock.cost, description = mock.description)
+        advanceUntilIdle()
+
+        //then
+        verify(addProductUseCase, times(1)).invoke(AddProductUseCase.Params(mock))
     }
 
     @Test
-    fun init_shouldLoadProducts() {
-        viewModel = ProductViewModel(fetchProductUseCase, clearProductUseCase, addProductUseCase, updateProductUseCase)
+    fun `check editProduct is update product`()= runTest {
+        //given
+        val mock = RepositoryMock.product()
 
-        verify(fetchProductUseCase).invoke()
-        verify(productDataSource).notes()
+        //when
+        buildViewModel()
+        productViewModel.editProduct(title = mock.name, cost = mock.cost, product = mock)
+        advanceUntilIdle()
+
+        //then
+        verify(updateProductUseCase, times(1)).invoke(UpdateProductUseCase.Params(mock))
+    }
+
+    @Test
+    fun `check deleteAllProducts is correct`()= runTest {
+        //given
+        //when
+        buildViewModel()
+        productViewModel.deleteAllProducts()
+        advanceUntilIdle()
+
+        //then
+        verify(clearProductUseCase, times(1)).invoke()
     }
 
 }

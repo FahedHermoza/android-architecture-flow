@@ -7,7 +7,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.NonCancellable.cancel
 import timber.log.Timber
 
-abstract class BaseViewModel : ViewModel(), CoroutineScope by ioScope() {
+abstract class BaseViewModel : ViewModel(), CoroutineScope by ioScope(){
 
     @InternalCoroutinesApi
     override fun onCleared() {

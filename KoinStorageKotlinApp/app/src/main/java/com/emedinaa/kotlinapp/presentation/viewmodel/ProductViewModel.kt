@@ -25,7 +25,7 @@ class ProductViewModel(
         loadProducts()
     }
 
-    fun loadProducts() = launch {
+    private fun loadProducts() = launch {
         fetchProductUseCase.invoke().collect {
             _products.postValue(it)
         }

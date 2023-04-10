@@ -1,13 +1,18 @@
 package com.emedinaa.kotlinapp.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import app.cash.turbine.test
+import com.emedinaa.kotlinapp.domain.ProductRepository
 import com.emedinaa.kotlinapp.domain.usecase.AddProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.ClearProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.FetchProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.UpdateProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.mock.RepositoryMock
+import junit.framework.TestCase.assertEquals
+
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -22,7 +27,7 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import kotlin.time.ExperimentalTime
+import org.mockito.kotlin.whenever
 
 /***
  * https://stackoverflow.com/questions/48049131/cannot-resolve-symbol-instanttaskexecutorrule/56073388#56073388
@@ -35,13 +40,12 @@ class ProductViewModelUnitTests {
     val instantExecutorRule = InstantTaskExecutorRule()
     private val testDispatcher = StandardTestDispatcher()
 
-    private val fetchProductUseCase = Mockito.mock(FetchProductUseCase::class.java)
+    private var fetchProductUseCase = Mockito.mock(FetchProductUseCase::class.java)
     private val clearProductUseCase = Mockito.mock(ClearProductUseCase::class.java)
     private val addProductUseCase = Mockito.mock(AddProductUseCase::class.java)
     private val updateProductUseCase = Mockito.mock(UpdateProductUseCase::class.java)
 
     private lateinit var productViewModel: ProductViewModel
-
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
@@ -61,10 +65,43 @@ class ProductViewModelUnitTests {
         Dispatchers.resetMain()
     }
 
-    //https://developer.android.com/kotlin/flow/test?hl=es-419
-    // Will be feature in the future
     @Test
-    fun `init loadProduct with list`()= runTest {}
+    fun `check initLoadProduct with element initialized`()= runBlocking {
+        //given
+        val expectedProducts = flowOf(RepositoryMock.listProduct())
+        val productRepository = Mockito.mock(ProductRepository::class.java)
+        whenever(productRepository.getAllProducts()).thenReturn(expectedProducts)
+        fetchProductUseCase = FetchProductUseCase(productRepository)
+        val firstState = ProductViewState(loading = false, products = RepositoryMock.listProduct())
+        //when
+        buildViewModel()
+        //then
+        productViewModel.state.test {
+            val emision = awaitItem()
+            assertEquals(firstState, emision)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `check initLoadProduct with changing elements`()= runTest{
+        //given
+        val firstState = ProductViewState(loading = true, products = emptyList())
+        val secondState = ProductViewState(loading = false, products = RepositoryMock.listProduct())
+        //when
+        buildViewModel()
+        //then
+        productViewModel.state.test {
+            productViewModel.loadProductsTest(secondState)
+            val emision1 = awaitItem()
+            assertEquals(firstState, emision1)
+
+            val emision2 = awaitItem()
+            assertEquals(secondState, emision2)
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 
     @Test
     fun `check addNewProduct is add product`()= runTest {

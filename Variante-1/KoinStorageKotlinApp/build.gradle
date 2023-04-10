@@ -64,6 +64,9 @@ ext {
     coroutines = '1.4.2'
     coroutines_test= '1.6.0'
 
+    //TODO test flow
+    turbineVersion = '0.11.0'
+
     //TODO livedata
     livedataKtx = '2.3.0'
 

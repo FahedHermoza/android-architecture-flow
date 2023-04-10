@@ -38,6 +38,10 @@ class ProductViewModel(
         }
     }
 
+    fun loadProductsTest(productViewState: ProductViewState) = launch {
+        _state.emit(productViewState)
+    }
+
     fun onEvent(event: ProductEvent) {
         when(event) {
             is ProductEvent.ActionAddNewProduct -> addNewProduct(event.title, event.cost, event.description)

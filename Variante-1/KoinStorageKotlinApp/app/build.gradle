@@ -108,4 +108,5 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:$mockito_version"
     testImplementation "androidx.arch.core:core-testing:$arch_core"
     androidTestImplementation "androidx.navigation:navigation-testing:$navigationVersion"
+    testImplementation "app.cash.turbine:turbine:$turbineVersion"
 }

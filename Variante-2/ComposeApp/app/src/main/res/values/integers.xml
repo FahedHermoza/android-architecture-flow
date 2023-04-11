@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="name_max_length">30</integer>
-    <integer name="height_max_length">3</integer>
-    <integer name="height_min_value">5</integer>
-    <integer name="notes_max_length">120</integer>
-</resources>

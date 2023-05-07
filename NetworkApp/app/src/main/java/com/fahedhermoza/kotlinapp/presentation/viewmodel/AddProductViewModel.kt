@@ -1,0 +1,55 @@
+package com.fahedhermoza.kotlinapp.presentation.viewmodel
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.fahedhermoza.kotlinapp.core.base.BaseViewModel
+import com.fahedhermoza.kotlinapp.core.data.DataType
+import com.fahedhermoza.kotlinapp.core.utils.livedata.SingleLiveEvent
+import com.fahedhermoza.kotlinapp.domain.model.Product
+import com.fahedhermoza.kotlinapp.domain.usecase.product.AddProductUseCase
+import com.fahedhermoza.kotlinapp.domain.usecase.user.GetObjectIdUseCase
+import com.fahedhermoza.kotlinapp.domain.usecase.user.GetSessionUseCase
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import timber.log.Timber
+
+class AddProductViewModel(
+    private val addProductUseCase: AddProductUseCase,
+    private val getSessionUseCase: GetSessionUseCase,
+    private val getObjectIdUseCase: GetObjectIdUseCase
+) : BaseViewModel() {
+    private val _onError = MutableLiveData<String>()
+    val onError: LiveData<String?> = _onError
+
+    private val _loadingLiveData = MutableLiveData<Boolean>()
+    val loadingLiveData: LiveData<Boolean?> get() = _loadingLiveData
+
+    val onSuccess = SingleLiveEvent<Product?>()
+
+    private val token by lazy {
+        getSessionUseCase() ?: ""
+    }
+
+    private val objectId by lazy {
+        getObjectIdUseCase.invoke() ?: ""
+    }
+
+    fun addProduct(title: String, cost: Double) = launch {
+        val product = Product("", title, "", cost, "", objectId)
+        val params = AddProductUseCase.AddProductUseCaseParams(token, product)
+        addProductUseCase.invoke(params).collect { dataState ->
+            _loadingLiveData.postValue(dataState.loading)
+            when (dataState.type) {
+                DataType.Success -> {
+                    val data = dataState.data
+                    onSuccess.postValue(data!!)
+                }
+
+                DataType.Error -> {
+                    _onError.postValue("Ocurrió un error ${dataState.code}")
+                    Timber.i("Error logueo: ${dataState.message}")
+                }
+            }
+        }
+    }
+}

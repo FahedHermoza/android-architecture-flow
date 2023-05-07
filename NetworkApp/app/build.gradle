@@ -1,0 +1,99 @@
+/**
+ * Se realizaron los siguiente cambios :
+ *   - compileSdkVersion 30
+ *   - compileSdkVersion rootProject.compileSdkVersion
+ *
+ *   - minSdkVersion 21
+ *   - minSdkVersion rootProject.minSdkVersion
+ *
+ *   - targetSdkVersion 30
+ *   - targetSdkVersion rootProject.targetSdkVersion
+ *
+ *   También en la sección de dependencias se hicieron cambios
+ */
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.fahedhermoza.kotlinapp"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$androidXVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$extJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+
+    //TODO Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+
+    //TODO coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
+    //TODO retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit2"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.gson"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+    //INTERCEPTOR
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3"
+
+    //TODO lifecycle
+    implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$archLifecycleVersion"
+
+    //TODO livedata
+    //https://maven.google.com/web/index.html?q=livedata-ktx#androidx.lifecycle:lifecycle-livedata-ktx:2.3.0
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedataKtx"
+
+    // TODO Mockito
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockito_version"
+    androidTestImplementation "androidx.arch.core:core-testing:$arch_core"
+    
+    // TODO Koin
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
+    //TODO Timber
+    implementation "com.jakewharton.timber:timber:$timber_version"
+}

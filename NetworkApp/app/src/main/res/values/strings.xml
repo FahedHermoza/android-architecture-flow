@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">KotlinApp</string>
+    <string name="action_delete">Delete</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Login -->
+    <string name="hint_email_login_fragment">Email</string>
+    <string name="hint_pass_login_fragment">Contraseña</string>
+    <string name="button_login_fragment">INICIAR SESIÓN</string>
+    <!-- AddProduct -->
+    <string name="title_add_product_fragment">Titulo del Producto</string>
+    <string name="cost_add_product_fragment">Costo</string>
+    <string name="button_add_product_fragment">AGREGAR</string>
+    <!-- EditProduct -->
+    <string name="button_edit_product_fragment">EDITAR</string>
+</resources>

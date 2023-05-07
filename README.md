@@ -8,8 +8,7 @@ Ejemplos de arquitecturas Android MVVM basados en Flow.
 
 ### Configuración de backendless, necesario para correr la app de prueba:
 1. Crear una nueva cuenta en backendless.
-2. Configurar de acuerdo al siguiente video.
-![SettingsBackendless](https://drive.google.com/file/d/19Ow_9vZXwS824_zlJb0f7ItCqoFr7iGv/view?usp=share_link).
+2. Configurar de acuerdo al siguiente video: [Tutorial](https://drive.google.com/file/d/19Ow_9vZXwS824_zlJb0f7ItCqoFr7iGv/view?usp=share_link).
 
 ### Credenciales de inicio de sesión
 Usuario: admin@admin.com

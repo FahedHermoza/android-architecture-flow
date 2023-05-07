@@ -5,7 +5,7 @@ Ejemplos de arquitecturas Android MVVM basados en Flow.
 
 ## Proyecto Notas
 ### NetworkApp:
-[NetworkApp](https://github.com/FahedHermoza/reviewArchitectures/tree/main/KoinNetworkKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (navigation, lifecycle, livedata, preference), Coroutines (Flow) y algunas librerias ( retrofit, preferences, timber). 
+[NetworkApp](https://github.com/FahedHermoza/reviewArchitectures/tree/main/KoinNetworkKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (navigation, lifecycle, livedata, SharedPreferences), Coroutines (Flow) y algunas librerias ( retrofit, timber). 
 
 #### Configuración de backendless, necesario para correr la app de prueba:
 1. Crear una nueva cuenta en backendless.

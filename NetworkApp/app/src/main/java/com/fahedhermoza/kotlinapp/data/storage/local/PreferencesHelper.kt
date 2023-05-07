@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 /**
  *
  */
-private const val MY_NOTES_PREFERENCES = "com.emedinaa.kotlinapp"
+private const val MY_NOTES_PREFERENCES = "com.fahdehermoza.kotlinapp"
 private const val PREFERENCES_USERNAME = "$MY_NOTES_PREFERENCES.username"
 private const val PREFERENCES_TOKEN = "$MY_NOTES_PREFERENCES.token"
 private const val PREFERENCES_OBJECT_ID = "$MY_NOTES_PREFERENCES.objectId"

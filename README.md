@@ -4,8 +4,17 @@ Ejemplos de arquitecturas Android MVVM basados en Flow.
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/built-by-codebabes.svg)](https://forthebadge.com)
 
 ## Proyecto Notas
-[NetworkApp](https://github.com/FahedHermoza/reviewArchitectures/tree/main/KoinNetworkKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (navigation, lifecycle, livedata), Coroutines (Flow) y algunas librerias ( retrofit, preferences, timber). 
-*Requiere configurar BD remota en Backendless.
+[NetworkApp](https://github.com/FahedHermoza/reviewArchitectures/tree/main/KoinNetworkKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (navigation, lifecycle, livedata, preference), Coroutines (Flow) y algunas librerias ( retrofit, preferences, timber). 
+
+### Configuración de backendless, necesario para correr la app de prueba:
+1. Crear una nueva cuenta en backendless.
+2. Configurar de acuerdo al siguiente video.
+![SettingsBackendless](https://drive.google.com/file/d/19Ow_9vZXwS824_zlJb0f7ItCqoFr7iGv/view?usp=share_link).
+
+### Credenciales de inicio de sesión
+Usuario: admin@admin.com
+Password: 12345admin
+
 
 [StorageApp](https://github.com/FahedHermoza/ArchitectureAndroid-Flow/tree/main/KoinStorageKotlinApp): Construido con arquitectura Clean, patron MVVM, Android Jetpack (room, navigation, lifecycle, livedata), Coroutines (Flow) y algunas librerias (koin, timber, junit, mockito).
 

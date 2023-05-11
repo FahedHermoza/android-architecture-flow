@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ComposeApp</string>
+
+    <!-- Login Screen  -->
+    <string name="icon_login_screen">Logo</string>
+    <string name="email_login_screen">Email</string>
+    <string name="password_login_screen">Password</string>
+    <string name="button_login_screen">Login</string>
+    <string name="error_login_screen">Invalid data</string>
+
+    <!-- Product Screen  -->
+    <string name="content_description_icon_item">Logo</string>
+</resources>

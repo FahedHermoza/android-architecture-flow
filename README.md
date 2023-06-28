@@ -1,5 +1,6 @@
 # Arquitectura Android basado en Flow
 [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/built-by-codebabes.svg)](https://forthebadge.com)
+
 Este repositorio contiene 2 proyectos. El primero utiliza una base de datos como fuente de datos (storageApp), mientras que el segundo utiliza conexiones a servicios web y preferencias como fuente de datos (networkApp).
 
 A lo largo del respositorio se presentan diversas variaciones en la arquitectura del proyecto base, manteniendo el núcleo de la arquitectura con la biblioteca Flow. Las siguientes son las variaciones disponibles:

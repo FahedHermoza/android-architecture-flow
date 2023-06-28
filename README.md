@@ -5,8 +5,8 @@ Este repositorio contiene 2 proyectos. El primero utiliza una base de datos como
 
 A lo largo del respositorio se presentan diversas variaciones en la arquitectura del proyecto base, manteniendo el núcleo de la arquitectura con la biblioteca Flow. Las siguientes son las variaciones disponibles:
 
-- Unidirectional data flow: Esta implementación representa una combinación intermedia entre MVVM y MVI.
-- Compose: Utiliza Jetpack Compose y Navigation Compose para la capa de presentación.
+- **Unidirectional data flow**: Esta implementación representa una combinación intermedia entre MVVM y MVI.
+- **Compose**: Utiliza Jetpack Compose y Navigation Compose para la capa de presentación.
 
 Aquí hay una muestra del proyecto base (networkApp) utilizando Compose: [Video](https://drive.google.com/file/d/1D2Eeu6imReaxkh1IYItEChjd7lCtMqVg/view?usp=sharing).
 

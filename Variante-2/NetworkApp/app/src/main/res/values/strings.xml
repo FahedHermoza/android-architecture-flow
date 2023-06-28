@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">ComposeApp</string>
+    <string name="return_toolbar_screen">Back</string>
+    <!-- Login Screen  -->
+    <string name="icon_login_screen">Logo</string>
+    <string name="email_login_screen">Email</string>
+    <string name="password_login_screen">Password</string>
+    <string name="hide_password_login_screen">Hide password</string>
+    <string name="show_password_login_screen">Show password</string>
+    <string name="button_login_screen">Login</string>
+    <string name="error_login_screen">Invalid data</string>
+
+    <!-- Product Screen  -->
+    <string name="content_description_icon_item">Logo</string>
+    <string name="title_product_screen">List of products</string>
+    <string name="help_options">Options</string>
+    <string name="help_option_delete">Deleted products.</string>
+
+    <!-- AddProduct Screen  -->
+    <string name="title_add_product_screen">Title of product</string>
+    <string name="cost_add_product_screen">Cost</string>
+    <string name="error_add_product_screen">Invalid data</string>
+    <string name="save_add_product_screen">SAVE</string>
+    <string name="title_toolbar_add_product_screen">New Product</string>
+
+    <!-- EditProduct -->
+    <string name = "title_edit_product_screen">Modify Product</string>
+    <string name="button_edit_product_screen">SAVE</string>
+    <string name="error_edit_product_screen">Invalid data</string>
+
+    <!-- AlertDialog-->
+    <string name = "dialog_title">Data collected</string>
+    <string name = "dialog_ok">Clear</string>
+    <string name = "dialog_cancel">Cancel</string>
+    <string name="dialog_loading">Loading...</string>
+    <string name="dialog_loading_subtitle">Please wait</string>
+    <string name="dialog_loading_cancel">Cancel</string>
+
+
+
+</resources>

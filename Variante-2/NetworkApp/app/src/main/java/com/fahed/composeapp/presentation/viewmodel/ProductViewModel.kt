@@ -56,35 +56,36 @@ class ProductViewModel(
                 }
             }
         }
+    }
+    fun deleteAllProducts() = launch {
+        val minimalCost: Double = 0.0
+        val params = ClearProductUseCase.ClearProductUseCaseParams(token, minimalCost)
+        clearProductUseCase.invoke(params).collect { dataState ->
+            _loadingLiveData.postValue(dataState.loading)
+            when (dataState.type) {
+                DataType.Success -> {
+                    val multipleDelete = dataState.data ?: MultipleDelete(quantity = 0)
+                    if (multipleDelete.quantity > 1) {
+                        onSuccessDeleteAll.postValue("Productos eliminados.")
+                    } else if (multipleDelete.quantity == 1) {
+                        onSuccessDeleteAll.postValue("Producto eliminado.")
+                    } else {
+                        onSuccessDeleteAll.postValue("No se encontraron productos.")
+                    }
+                    _productEmpty.postValue(true)
+                }
 
-        fun deleteAllProducts() = launch {
-            val minimalCost: Double = 0.0
-            val params = ClearProductUseCase.ClearProductUseCaseParams(token, minimalCost)
-            clearProductUseCase.invoke(params).collect { dataState ->
-                _loadingLiveData.postValue(dataState.loading)
-                when (dataState.type) {
-                    DataType.Success -> {
-                        val multipleDelete = dataState.data ?: MultipleDelete(quantity = 0)
-                        if (multipleDelete.quantity > 1) {
-                            onSuccessDeleteAll.postValue("Productos eliminados.")
-                        } else if (multipleDelete.quantity == 1) {
-                            onSuccessDeleteAll.postValue("Producto eliminado.")
-                        } else {
-                            onSuccessDeleteAll.postValue("No se encontraron productos.")
-                        }
-                        _productEmpty.postValue(true)
-                    }
-
-                    DataType.Error -> {
-                        _onError.postValue("Ocurrió un error ${dataState.code}")
-                        Timber.i("Error logueo: ${dataState.message}")
-                    }
-                    else -> {
-                        _onError.postValue("Ocurrió un error ${dataState.code}")
-                        Timber.i("Error logueo: ${dataState.message}")
-                    }
+                DataType.Error -> {
+                    _onError.postValue("Ocurrió un error ${dataState.code}")
+                    Timber.i("Error logueo: ${dataState.message}")
+                }
+                else -> {
+                    _onError.postValue("Ocurrió un error ${dataState.code}")
+                    Timber.i("Error logueo: ${dataState.message}")
                 }
             }
         }
     }
+
+
 }

@@ -23,6 +23,8 @@ import com.fahed.composeapp.domain.usecase.user.GetObjectIdUseCase
 import com.fahed.composeapp.domain.usecase.user.GetSessionUseCase
 import com.fahed.composeapp.domain.usecase.user.SaveSessionUseCase
 import com.fahed.composeapp.domain.usecase.user.VerifySessionUseCase
+import com.fahed.composeapp.presentation.viewmodel.AddProductViewModel
+import com.fahed.composeapp.presentation.viewmodel.EditProductViewModel
 import com.fahed.composeapp.presentation.viewmodel.LoginViewModel
 import com.fahed.composeapp.presentation.viewmodel.ProductViewModel
 import okhttp3.OkHttpClient
@@ -61,10 +63,11 @@ val viewmodelModule = module {
     single { SaveSessionUseCase(get()) }
     single { VerifySessionUseCase(get()) }
 
-    viewModel { ProductViewModel(get(), get(), get()) }
-    //viewModel { AddProductViewModel(get(), get(), get()) }
-    //viewModel { EditProductViewModel(get(), get()) }
     viewModel { LoginViewModel(get(), get()) }
+    viewModel { ProductViewModel(get(), get(), get()) }
+    viewModel { AddProductViewModel(get(), get(), get()) }
+    viewModel { EditProductViewModel(get(), get()) }
+
 }
 
 const val API_BASE_URL = "https://api.backendless.com/"

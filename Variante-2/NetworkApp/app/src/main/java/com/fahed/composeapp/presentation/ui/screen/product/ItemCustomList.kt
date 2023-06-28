@@ -24,16 +24,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.fahed.composeapp.R
 import com.fahed.composeapp.domain.model.Product
+import com.fahed.composeapp.presentation.viewmodel.EditProductViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Suppress("UNUSED_EXPRESSION")
 @Composable
-fun ListBasic(products: List<Product>, onEditProductClick: (id: Int) -> Unit) {
+fun ListBasic(products: List<Product>, editProductViewModel: EditProductViewModel = getViewModel(),onEditProductClick: (objectId: String, name:String, description:String, cost:Float, logo:String, code:String) -> Unit) {
     val context = LocalContext.current
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         products.forEach {
             ItemListBasic(product = it, modifier = Modifier.clickable {
                 Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
-                //onEditProductClick(it.id)
+                onEditProductClick(it.objectId ?: "", it.name ?: "",
+                    it.description ?: "", it.cost?.toFloat() ?: 0.0f, it.logo ?: "", it.code ?: "")
         }) }
     }
 }

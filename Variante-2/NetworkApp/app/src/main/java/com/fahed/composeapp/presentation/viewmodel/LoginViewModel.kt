@@ -20,13 +20,14 @@ class LoginViewModel (
     val onError: LiveData<String?> = _onError
 
     private val _loadingLiveData = MutableLiveData<Boolean>()
-    val loadingLiveData: LiveData<Boolean?> get() = _loadingLiveData
+    val onLoading: LiveData<Boolean?> = _loadingLiveData
 
     val onSuccess = SingleLiveEvent<User?>()
 
     fun login(username: String?, password: String?) = launch {
         val params = AuthenticateUserUseCase.AuthenticateUserUseCaseParams(username, password)
         authenticationUserUseCase.invoke(params).collect { dataState ->
+            Timber.e("Loading: ${dataState.loading}")
             _loadingLiveData.postValue(dataState.loading)
             when (dataState.type) {
                 DataType.Success -> {
@@ -52,6 +53,7 @@ class LoginViewModel (
                         ErrorHttpException.fromJsonString(dataState.errorBody.toString())
                     _onError.postValue(errorResponse.message)
                     Timber.e("Error logueo: ${dataState.message.toString()}")
+                    Timber.e("Loading: ${dataState.loading}")
                 }
                 else -> {}
             }

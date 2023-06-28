@@ -12,11 +12,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.fahed.composeapp.domain.model.Product
+import com.fahed.composeapp.presentation.ui.screen.addProduct.AddProductScreen
+import com.fahed.composeapp.presentation.ui.screen.editProduct.EditScreen
 import com.fahed.composeapp.presentation.ui.screen.login.LoginScreen
 import com.fahed.composeapp.presentation.ui.screen.product.ProductScreen
 import com.fahed.composeapp.ui.theme.ComposeAppTheme
-import com.fahed.networkapp.presentation.ui.screen.Login
-import com.fahed.networkapp.presentation.ui.screen.Products
+import com.fahed.composeapp.presentation.ui.AddProduct
+import com.fahed.composeapp.presentation.ui.EditProduct
+import com.fahed.composeapp.presentation.ui.Login
+import com.fahed.composeapp.presentation.ui.Products
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -50,22 +55,38 @@ fun Navigation(){
         }
         composable(route = Products.route) {
             ProductScreen(
-                /*onAddProductClick = {
+                onAddProductClick = {
                     navController.navigateSingleTopTo(AddProduct.route)
                 },
                 onEditProductClick = {
-                        id -> navController.navigateToEditProduct(idProductType = "$id")
-                }*/)
-        }/*
+                        objectId, name, description, cost, logo , code->
+                    navController.navigateToEditProduct(
+                        objectIdProductTypeArg = objectId,
+                        nameProductTypeArg = name,
+                        descriptionProductTypeArg = description.ifEmpty { "No description" },
+                        costProductTypeArg = cost,
+                        logoProductTypeArg = logo.ifEmpty {"No logo"},
+                        codeProductTypeArg = code)
+                })
+        }
         composable(route = AddProduct.route) {
             AddProductScreen(navController)
         }
         composable(route = EditProduct.routeWithArgs,
             arguments = EditProduct.arguments) {
                 navBackStackEntry ->
-            val idProductType = navBackStackEntry.arguments?.getString(EditProduct.idProductTypeArg) ?: ""
-            EditScreen(navController = navController, idProductType = idProductType)
-        }*/
+            val objectIdProductTypeArg = navBackStackEntry.arguments?.getString(EditProduct.objectIdProductTypeArg) ?: ""
+            val nameProductTypeArg = navBackStackEntry.arguments?.getString(EditProduct.nameProductTypeArg) ?: ""
+            val descriptionProductTypeArg = navBackStackEntry.arguments?.getString(EditProduct.descriptionProductTypeArg) ?: ""
+            val costProductTypeArg = navBackStackEntry.arguments?.getFloat(EditProduct.costProductTypeArg) ?: 0.0f
+            val logoProductTypeArg = navBackStackEntry.arguments?.getString(EditProduct.logoProductTypeArg) ?: ""
+            val codeProductTypeArg = navBackStackEntry.arguments?.getString(EditProduct.codeProductTypeArg) ?: ""
+
+            EditScreen(navController = navController, objectIdProductTypeArg = objectIdProductTypeArg,
+                nameProductTypeArg= nameProductTypeArg, descriptionProductTypeArg = descriptionProductTypeArg,
+                costProductTypeArg = costProductTypeArg, logoProductTypeArg = logoProductTypeArg,
+                codeProductTypeArg = codeProductTypeArg)
+        }
     }
 }
 
@@ -73,10 +94,10 @@ fun NavHostController.navigateSingleTopTo(route: String) =
     this.navigate(route) {
         launchSingleTop = true
     }
-/*
-private fun NavHostController.navigateToEditProduct(idProductType: String) {
-    this.navigateSingleTopTo("${EditProduct.route}/$idProductType")
-}*/
+
+private fun NavHostController.navigateToEditProduct(objectIdProductTypeArg: String, nameProductTypeArg: String, descriptionProductTypeArg: String, costProductTypeArg: Float, logoProductTypeArg: String, codeProductTypeArg: String) {
+    this.navigateSingleTopTo("${EditProduct.route}/$objectIdProductTypeArg/${nameProductTypeArg}/${descriptionProductTypeArg}/${costProductTypeArg}/${logoProductTypeArg}/${codeProductTypeArg}")
+}
 
 @Composable
 fun Greeting(name: String) {

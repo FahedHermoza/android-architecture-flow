@@ -3,11 +3,7 @@ package com.fahed.composeapp.presentation.ui.screen.product
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -29,28 +25,51 @@ import org.koin.androidx.compose.getViewModel
 
 @Suppress("UNUSED_EXPRESSION")
 @Composable
-fun ListBasic(products: List<Product>, editProductViewModel: EditProductViewModel = getViewModel(),onEditProductClick: (objectId: String, name:String, description:String, cost:Float, logo:String, code:String) -> Unit) {
+fun ListBasic(
+    products: List<Product>,
+    editProductViewModel: EditProductViewModel = getViewModel(),
+    onEditProductClick: (
+        objectId: String,
+        name: String,
+        description: String,
+        cost: Float,
+        logo: String,
+        code: String
+    ) -> Unit
+) {
     val context = LocalContext.current
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         products.forEach {
-            ItemListBasic(product = it, modifier = Modifier.clickable {
-                Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
-                onEditProductClick(it.objectId ?: "", it.name ?: "",
-                    it.description ?: "", it.cost?.toFloat() ?: 0.0f, it.logo ?: "", it.code ?: "")
-        }) }
+            ItemListBasic(
+                product = it,
+                modifier = Modifier.clickable {
+                    Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+                    onEditProductClick(
+                        it.objectId ?: "", it.name ?: "",
+                        it.description ?: "", it.cost?.toFloat() ?: 0.0f, it.logo ?: "", it.code ?: ""
+                    )
+                }
+            )
+        }
     }
 }
 
 @Composable
 fun ItemListBasic(product: Product, modifier: Modifier) {
-    Row(verticalAlignment = Alignment.CenterVertically,
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.padding(
             top = dimensionResource(id = R.dimen.common_padding_min),
-            bottom = dimensionResource(id = R.dimen.common_padding_min))) {
-        Image(painter = painterResource(id = R.mipmap.ic_funko),
-            contentDescription = stringResource(R.string.content_description_icon_item), modifier = Modifier
+            bottom = dimensionResource(id = R.dimen.common_padding_min)
+        )
+    ) {
+        Image(
+            painter = painterResource(id = R.mipmap.ic_funko),
+            contentDescription = stringResource(R.string.content_description_icon_item),
+            modifier = Modifier
                 .size(dimensionResource(id = R.dimen.image_icon_size))
-                .clip(CircleShape))
+                .clip(CircleShape)
+        )
         Spacer(modifier = modifier.weight(1f))
         Text(
             text = product.name ?: "",

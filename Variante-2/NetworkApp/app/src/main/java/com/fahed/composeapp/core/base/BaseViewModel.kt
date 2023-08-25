@@ -18,5 +18,4 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope by ioScope() {
         }
         super.onCleared()
     }
-
 }

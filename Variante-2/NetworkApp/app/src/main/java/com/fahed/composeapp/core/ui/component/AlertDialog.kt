@@ -1,9 +1,5 @@
 package com.fahed.composeapp.core.ui.component
 
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.content.Context
-import android.widget.DatePicker
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -19,25 +15,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.fahed.composeapp.R
-import java.util.Calendar
-import java.util.Date
 
 @Composable
-fun AlertDialogInfo( info: String, onDialogChange: (Boolean) -> Unit){ //Function 1rst order
-    AlertDialog(onDismissRequest = { onDialogChange(false)},
-    title = { Text(text = stringResource(id = R.string.dialog_title))},
-        text = { Text(text = info)},
+fun AlertDialogInfo(info: String, onDialogChange: (Boolean) -> Unit) { // Function 1rst order
+    AlertDialog(
+        onDismissRequest = { onDialogChange(false) },
+        title = { Text(text = stringResource(id = R.string.dialog_title)) },
+        text = { Text(text = info) },
         confirmButton = {
             TextButton(onClick = { onDialogChange(true) }) {
                 Text(text = stringResource(id = R.string.dialog_ok))
             }
         }, dismissButton = {
-            TextButton(onClick = { onDialogChange(false) }) {
-                Text(text = stringResource(id = R.string.dialog_cancel))
-            }
-        })
+        TextButton(onClick = { onDialogChange(false) }) {
+            Text(text = stringResource(id = R.string.dialog_cancel))
+        }
+    }
+    )
 }
-//This will be fix
+// This will be fix
 @Composable
 fun LoadingAlertDialog(show: Boolean) {
     val openDialog = remember { mutableStateOf(false) }
@@ -70,4 +66,3 @@ fun LoadingAlertDialog(show: Boolean) {
         )
     }
 }
-

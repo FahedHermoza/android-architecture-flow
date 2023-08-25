@@ -30,5 +30,4 @@ interface BaseUseCase {
     }
 
     abstract class Params
-
 }

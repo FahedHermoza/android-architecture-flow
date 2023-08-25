@@ -8,8 +8,4 @@ data class ErrorHttpException(val code: Int, val message: String, val errorData:
             return Gson().fromJson(jsonString, ErrorHttpException::class.java)
         }
     }
-
 }
-
-
-

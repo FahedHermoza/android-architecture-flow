@@ -20,7 +20,7 @@ class AddProductViewModel(
     private val _onError = MutableLiveData<String>()
     val onError: LiveData<String?> = _onError
 
-    private val _onLoading= MutableLiveData<Boolean>()
+    private val _onLoading = MutableLiveData<Boolean>()
     val onLoading: LiveData<Boolean?> get() = _onLoading
 
     val onSuccess = SingleLiveEvent<Product?>()

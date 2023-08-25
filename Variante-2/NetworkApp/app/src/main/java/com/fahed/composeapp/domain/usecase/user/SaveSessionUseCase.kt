@@ -3,7 +3,7 @@ package com.fahed.composeapp.domain.usecase.user
 import com.fahed.composeapp.domain.ProductSessionRepository
 import com.fahed.networkapp.core.domain.BaseUseCase
 
-class SaveSessionUseCase (private val productSessionRepository: ProductSessionRepository) :
+class SaveSessionUseCase(private val productSessionRepository: ProductSessionRepository) :
     BaseUseCase.SimpleBaseUseCase<SaveSessionUseCase.SaveSessionUseCaseParams, Unit> {
 
     data class SaveSessionUseCaseParams(

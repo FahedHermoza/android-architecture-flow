@@ -11,7 +11,7 @@ import com.fahed.composeapp.domain.model.User
  */
 object Mapper {
 
-    //TODO convertir entidad a DTO y DTO a entidad
+    // TODO convertir entidad a DTO y DTO a entidad
     fun userDTOToUser(userDTO: UserDTO): User =
         User(
             userDTO.token ?: "", userDTO.email ?: "", userDTO.objectId ?: "",
@@ -27,5 +27,4 @@ object Mapper {
         product.objectId, product.name,
         product.description, product.cost, product.logo, product.code
     )
-
 }

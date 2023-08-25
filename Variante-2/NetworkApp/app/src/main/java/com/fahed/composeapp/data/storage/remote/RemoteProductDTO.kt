@@ -2,12 +2,11 @@ package com.fahed.composeapp.data.storage.remote
 
 import com.google.gson.annotations.SerializedName
 
-
 /**
  *
  */
 
-//User
+// User
 data class UserDTO(
     @SerializedName("user-token") val token: String?,
     val email: String?,
@@ -15,7 +14,6 @@ data class UserDTO(
     val code: Int? = 0,
     val message: String? = ""
 )
-
 
 data class LogInRequest(
     val login: String?,
@@ -30,7 +28,7 @@ data class LogInResponse(
     val message: String? = ""
 )
 
-//Product
+// Product
 data class ProductRaw(
     val name: String?,
     val description: String?,
@@ -39,7 +37,7 @@ data class ProductRaw(
     val code: String?
 )
 
-//@SerializedName("name")
+// @SerializedName("name")
 data class ProductDTO(
     val objectId: String?,
     val name: String?,

@@ -16,5 +16,4 @@ class ProductPreferencesRepository(private val preferencesHelper: PreferencesHel
     override fun isActiveSession(): Boolean = preferencesHelper.isSignedIn()
 
     override fun clearSession() = preferencesHelper.clearSession()
-
 }

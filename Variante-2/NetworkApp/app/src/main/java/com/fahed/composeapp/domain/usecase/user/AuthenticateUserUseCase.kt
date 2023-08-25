@@ -7,8 +7,7 @@ import com.fahed.composeapp.domain.usecase.user.AuthenticateUserUseCase.Authenti
 import com.fahed.networkapp.core.domain.BaseUseCase
 import kotlinx.coroutines.flow.Flow
 
-
-class AuthenticateUserUseCase (private val authenticationRepository: AuthenticationRepository) :
+class AuthenticateUserUseCase(private val authenticationRepository: AuthenticationRepository) :
     BaseUseCase.FlowDataBaseUseCase<AuthenticateUserUseCaseParams, User> {
 
     override suspend fun invoke(params: AuthenticateUserUseCaseParams): Flow<DataState<User>> {

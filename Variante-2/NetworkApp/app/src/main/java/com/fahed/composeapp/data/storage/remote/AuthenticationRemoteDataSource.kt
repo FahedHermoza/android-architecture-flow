@@ -20,5 +20,4 @@ class AuthenticationRemoteDataSource : AuthenticationDataSource, KoinComponent {
             logInResponse.message
         )
     }
-
 }

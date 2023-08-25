@@ -3,33 +3,13 @@ package com.fahed.composeapp.presentation.ui.screen.addProduct
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -46,29 +26,35 @@ import timber.log.Timber
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun AddProductScreen(navController: NavController,
-                     viewModel: AddProductViewModel = getViewModel()) {
+fun AddProductScreen(
+    navController: NavController,
+    viewModel: AddProductViewModel = getViewModel()
+) {
     var titleValue by remember { mutableStateOf("") }
     var costValue by remember { mutableStateOf("") }
     val context = LocalContext.current
 
-    //intiViewModel
+    // intiViewModel
     var loadingValue by remember { mutableStateOf(false) }
     observerSuccess(navController, viewModel)
-    observerLoading(viewModel){ loadingValue = it}
+    observerLoading(viewModel) { loadingValue = it }
     observerError(viewModel, context)
 
-    //setupUI
+    // setupUI
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = stringResource(R.string.title_toolbar_add_product_screen)) },
+            TopAppBar(
+                title = { Text(text = stringResource(R.string.title_toolbar_add_product_screen)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(imageVector = Icons.Filled.ArrowBack,
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.return_toolbar_screen),
-                            tint = androidx.compose.ui.graphics.Color.White)
+                            tint = androidx.compose.ui.graphics.Color.White
+                        )
                     }
-            })
+                }
+            )
         }
     ) {
         Column(
@@ -78,13 +64,15 @@ fun AddProductScreen(navController: NavController,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            TextField(value = titleValue, onValueChange = { titleValue = it },
+            TextField(
+                value = titleValue, onValueChange = { titleValue = it },
                 label = { Text(text = stringResource(R.string.title_add_product_screen)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
             CustomSpacer()
-            TextField(value = costValue, onValueChange = { costValue = it },
+            TextField(
+                value = costValue, onValueChange = { costValue = it },
                 label = { Text(text = stringResource(R.string.cost_add_product_screen)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
@@ -107,8 +95,6 @@ fun AddProductScreen(navController: NavController,
                         Toast.makeText(context, R.string.error_add_product_screen, Toast.LENGTH_SHORT).show()
                         return@Button
                     }
-
-
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -122,7 +108,7 @@ fun AddProductScreen(navController: NavController,
 @Composable
 fun observerSuccess(navController: NavController, viewModel: AddProductViewModel) {
     val onSuccess = viewModel.onSuccess.observeAsState().value
-    LaunchedEffect(onSuccess) {//Observer for the onSuccess state
+    LaunchedEffect(onSuccess) { // Observer for the onSuccess state
         onSuccess?.let {
             navController.popBackStack()
         }
@@ -132,7 +118,7 @@ fun observerSuccess(navController: NavController, viewModel: AddProductViewModel
 @Composable
 fun observerLoading(viewModel: AddProductViewModel, onValueChanged: (Boolean) -> Unit) {
     val isLoading by viewModel.onLoading.observeAsState(initial = false)
-    LaunchedEffect(isLoading) {//Observer for the onLoading state
+    LaunchedEffect(isLoading) { // Observer for the onLoading state
         isLoading?.let {
             onValueChanged(it)
         }
@@ -142,16 +128,16 @@ fun observerLoading(viewModel: AddProductViewModel, onValueChanged: (Boolean) ->
 @Composable
 fun observerError(viewModel: AddProductViewModel, context: Context) {
     val onError by viewModel.onError.observeAsState(initial = "initial")
-    LaunchedEffect(onError) {//Observer for the onLoading state
+    LaunchedEffect(onError) { // Observer for the onLoading state
         onError?.let {
-            if(onError!="initial")
+            if (onError != "initial")
                 Toast.makeText(context, "$it", Toast.LENGTH_SHORT).show()
         }
     }
 }
 
-fun isValid(title:String, cost:Double): Boolean{
-    if(title.isNotEmpty() && cost>0.0) return true
+fun isValid(title: String, cost: Double): Boolean {
+    if (title.isNotEmpty() && cost> 0.0) return true
     return false
 }
 /*

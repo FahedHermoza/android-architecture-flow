@@ -12,7 +12,7 @@ import com.fahedhermoza.kotlinapp.core.utils.livedata.SingleLiveEvent
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class LoginViewModel (
+class LoginViewModel(
     private val authenticationUserUseCase: AuthenticateUserUseCase,
     private val saveSessionUseCase: SaveSessionUseCase
 ) : BaseViewModel() {
@@ -52,7 +52,7 @@ class LoginViewModel (
                     var errorResponse =
                         ErrorHttpException.fromJsonString(dataState.errorBody.toString())
                     _onError.postValue(errorResponse.message)
-                    Timber.e("Error logueo: ${dataState.message.toString()}")
+                    Timber.e("Error logueo: ${dataState.message}")
                     Timber.e("Loading: ${dataState.loading}")
                 }
                 else -> {}

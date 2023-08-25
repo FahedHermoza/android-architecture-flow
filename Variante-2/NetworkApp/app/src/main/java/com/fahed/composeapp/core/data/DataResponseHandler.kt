@@ -19,5 +19,4 @@ abstract class DataResponseHandler<ViewState, Data>(private val response: DataRe
     }
 
     abstract suspend fun handleSuccess(resultObj: Data): DataState<ViewState>
-
 }

@@ -6,11 +6,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -20,14 +16,16 @@ import androidx.compose.ui.unit.dp
 import com.fahed.composeapp.R
 
 @Composable
-fun PasswordOutlinedTextField( setText: String = "", onValueChanged: (String) -> Unit) {
+fun PasswordOutlinedTextField(setText: String = "", onValueChanged: (String) -> Unit) {
     var textValue by remember { mutableStateOf("") }
     var hidden by remember { mutableStateOf(true) }
 
-    OutlinedTextField(value = setText.ifBlank { textValue },
+    OutlinedTextField(
+        value = setText.ifBlank { textValue },
         onValueChange = {
             textValue = it
-            onValueChanged(textValue) },
+            onValueChanged(textValue)
+        },
         label = { Text(text = stringResource(R.string.password_login_screen)) },
         modifier = Modifier.fillMaxWidth(),
         visualTransformation =

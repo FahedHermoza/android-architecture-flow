@@ -28,7 +28,6 @@ class PreferencesHelper(private val context: Context) {
         return sharedPreferences.getString(PREFERENCES_OBJECT_ID, null)
     }
 
-
     fun isSignedIn(): Boolean {
         val preferences = getSharedPreferences()
         return preferences.contains(PREFERENCES_USERNAME) && preferences.contains(PREFERENCES_TOKEN)
@@ -56,5 +55,4 @@ class PreferencesHelper(private val context: Context) {
     private fun getSharedPreferences(): SharedPreferences {
         return context.getSharedPreferences(MY_NOTES_PREFERENCES, Context.MODE_PRIVATE)
     }
-
 }

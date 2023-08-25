@@ -8,12 +8,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
-
 @Composable
-fun FabCustom(imageVector: ImageVector, contentDescription: String = "", isMiniSize: Boolean = false, onClick: () -> Unit) {
+fun FabCustom(
+    imageVector: ImageVector,
+    contentDescription: String = "",
+    isMiniSize: Boolean = false,
+    onClick: () -> Unit
+) {
     FloatingActionButton(
         onClick = onClick,
-        modifier = Modifier.size(if(isMiniSize) MiniFabSize else DefaultFabSize)
+        modifier = Modifier.size(if (isMiniSize) MiniFabSize else DefaultFabSize)
     ) {
         Icon(imageVector = imageVector, contentDescription = contentDescription)
     }

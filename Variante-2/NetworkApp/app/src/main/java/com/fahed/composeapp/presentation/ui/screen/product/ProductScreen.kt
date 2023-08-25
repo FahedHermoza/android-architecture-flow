@@ -4,12 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.FabPosition
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -28,12 +23,19 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ProductScreen(
-    viewModel:ProductViewModel = getViewModel(),
-    onEditProductClick: (objectId: String, name:String, description:String, cost:Float, logo:String, code:String) -> Unit = { _, _, _, _, _, _ ->},
+    viewModel: ProductViewModel = getViewModel(),
+    onEditProductClick: (
+        objectId: String,
+        name: String,
+        description: String,
+        cost: Float,
+        logo: String,
+        code: String
+    ) -> Unit = { _, _, _, _, _, _ -> },
     onAddProductClick: () -> Unit = {},
-){
+) {
     val products = viewModel.onProducts.observeAsState().value
-    LaunchedEffect(key1 = products.isNullOrEmpty()  ){ // Will review
+    LaunchedEffect(key1 = products.isNullOrEmpty()) { // Will review
         viewModel.loadProducts()
     }
     Scaffold(
@@ -43,22 +45,24 @@ fun ProductScreen(
                 imageVector = Icons.Default.Add,
                 onClick = {
                     onAddProductClick()
-                })
+                }
+            )
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = it.calculateBottomPadding()) //Fixed last element of the list
-        ){
-            ListBasic(products = products?: emptyList(), onEditProductClick = onEditProductClick)
-            //ListAdvanceList(getTestProducts())
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = it.calculateBottomPadding()) // Fixed last element of the list
+        ) {
+            ListBasic(products = products ?: emptyList(), onEditProductClick = onEditProductClick)
+            // ListAdvanceList(getTestProducts())
         }
     }
 }
 
 @Composable
-fun TopAppBarList(viewModel:ProductViewModel = getViewModel()) {
+fun TopAppBarList(viewModel: ProductViewModel = getViewModel()) {
     val context = LocalContext.current
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.title_product_screen)) },

@@ -1,6 +1,5 @@
 package com.fahed.composeapp.di
 
-import android.app.Application
 import com.fahed.composeapp.data.AuthenticationRemoteRepository
 import com.fahed.composeapp.data.ProductPreferencesRepository
 import com.fahed.composeapp.data.ProductRemoteRepository
@@ -17,19 +16,13 @@ import com.fahed.composeapp.domain.usecase.product.AddProductUseCase
 import com.fahed.composeapp.domain.usecase.product.ClearProductUseCase
 import com.fahed.composeapp.domain.usecase.product.FetchProductUseCase
 import com.fahed.composeapp.domain.usecase.product.UpdateProductUseCase
-import com.fahed.composeapp.domain.usecase.user.AuthenticateUserUseCase
-import com.fahed.composeapp.domain.usecase.user.ClearSessionUseCase
-import com.fahed.composeapp.domain.usecase.user.GetObjectIdUseCase
-import com.fahed.composeapp.domain.usecase.user.GetSessionUseCase
-import com.fahed.composeapp.domain.usecase.user.SaveSessionUseCase
-import com.fahed.composeapp.domain.usecase.user.VerifySessionUseCase
+import com.fahed.composeapp.domain.usecase.user.*
 import com.fahed.composeapp.presentation.viewmodel.AddProductViewModel
 import com.fahed.composeapp.presentation.viewmodel.EditProductViewModel
 import com.fahed.composeapp.presentation.viewmodel.LoginViewModel
 import com.fahed.composeapp.presentation.viewmodel.ProductViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -49,13 +42,13 @@ val repositoryModule = module {
 }
 
 val viewmodelModule = module {
-    //Product
+    // Product
     single { AddProductUseCase(get()) }
     single { ClearProductUseCase(get()) }
     single { FetchProductUseCase(get()) }
     single { UpdateProductUseCase(get()) }
 
-    //User
+    // User
     single { AuthenticateUserUseCase(get()) }
     single { ClearSessionUseCase(get()) }
     single { GetObjectIdUseCase(get()) }
@@ -67,7 +60,6 @@ val viewmodelModule = module {
     viewModel { ProductViewModel(get(), get(), get()) }
     viewModel { AddProductViewModel(get(), get(), get()) }
     viewModel { EditProductViewModel(get(), get()) }
-
 }
 
 const val API_BASE_URL = "https://api.backendless.com/"
